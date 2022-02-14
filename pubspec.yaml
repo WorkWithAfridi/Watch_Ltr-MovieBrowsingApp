@@ -38,6 +38,8 @@ dependencies:
   provider: any
   font_awesome_flutter: any
   http: any
+  intl: any
+  date_format: any
 
 dev_dependencies:
   flutter_test:

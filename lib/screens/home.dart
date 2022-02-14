@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customTextStyle.dart';
@@ -157,14 +158,15 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                   ),
+                  
                   Padding(
                     padding: const EdgeInsets.only(left: 75, right: 15),
-                    child: FittedBox(
-                      child: Text(
-                        'Released on: ${provider.trendingMovies.results![0].releaseDate.toString()}',
-                        style: defaultTS.copyWith(
-                            color: Colors.white.withOpacity(.6)),
-                      ),
+                    child: Text(
+                      '      ${provider.trendingMovies.results![0].overview.toString()}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: defaultTS.copyWith(
+                          color: white.withOpacity(.6), fontSize: 14),
                     ),
                   ),
                   SizedBox(
@@ -249,18 +251,25 @@ class _HomeState extends State<Home> {
                               .toString(),
                           overflow: TextOverflow.ellipsis,
                           style: subTitleTS.copyWith(
-                              color: white.withOpacity(.9),
-                              fontSize: 30),
+                              color: white.withOpacity(.9), fontSize: 30),
                         ),
                         Text(
-                          provider.trendingMovies.results![index]
-                              .overview
+                          'Released On: ${provider.trendingMovies.results![index].releaseDate.toString()}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: defaultTS.copyWith(
+                              color: white.withOpacity(.6), fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          provider.trendingMovies.results![index].overview
                               .toString(),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: defaultTS.copyWith(
-                              color: white.withOpacity(.6),
-                              fontSize: 14),
+                              color: white.withOpacity(.6), fontSize: 14),
                         ),
                       ],
                     ),
@@ -366,6 +375,14 @@ class _HomeState extends State<Home> {
                                           fontSize: 30),
                                     ),
                                   ),
+                                  Text(
+                                    'Released On: ${provider.trendingMovies.results![index].releaseDate.toString()}',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: defaultTS.copyWith(
+                                        color: white.withOpacity(.6),
+                                        fontSize: 12),
+                                  ),
                                   SizedBox(
                                     height: 5,
                                   ),
@@ -384,8 +401,7 @@ class _HomeState extends State<Home> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       Icon(
                                         Icons.star,
@@ -462,7 +478,7 @@ class _HomeState extends State<Home> {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 330,
+            height: 410,
             // width: 200,
             child: ListView.builder(
               shrinkWrap: true,
@@ -498,7 +514,28 @@ class _HomeState extends State<Home> {
                           overflow: TextOverflow.ellipsis,
                           style:
                               defaultTS.copyWith(color: white.withOpacity(.5)),
-                        )
+                        ),
+                        Text(
+                          'Release Date: ${provider.upcomingMovies.results![index].releaseDate.toString()}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: defaultTS.copyWith(
+                              color: white.withOpacity(.6), fontSize: 12),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          provider.upcomingMovies.results![index].overview
+                              .toString(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
+                          style: defaultTS.copyWith(
+                              color: white.withOpacity(.6), fontSize: 14),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),
@@ -581,8 +618,8 @@ class _HomeState extends State<Home> {
         gradient: LinearGradient(
           colors: [
             Colors.black.withOpacity(.0),
-            Colors.black.withOpacity(.4),
-            Colors.black.withOpacity(.6),
+            Colors.black.withOpacity(.5),
+            Colors.black.withOpacity(.8),
             Colors.black.withOpacity(.9),
             //add more colors for gradient
           ],
