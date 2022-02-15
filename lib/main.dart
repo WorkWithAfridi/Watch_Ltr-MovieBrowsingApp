@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customColors.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
+import 'package:watch_ltr/provider/show_details_provider.dart';
 import 'package:watch_ltr/screens/home.dart';
 import 'package:watch_ltr/screens/onBoarding.dart';
+import 'package:watch_ltr/screens/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
+        ChangeNotifierProvider(create: (context) => ShowDetailsProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -27,8 +30,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: OnBoarding.route,
+        initialRoute: SplashScreen.route,
         routes: {
+          SplashScreen.route: (context) => SplashScreen(),
           OnBoarding.route: (context) => OnBoarding(),
           Home.route: (context) => Home(),
         },

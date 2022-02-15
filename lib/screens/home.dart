@@ -52,10 +52,19 @@ class _HomeState extends State<Home> {
             child: Stack(
               children: [
                 provider.isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: red,
-                        ),
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Center(
+                            child: CircularProgressIndicator(
+                              color: red,
+                            ),
+                          ),
+                        ],
                       )
                     : MoviesPage(),
                 Container(
@@ -73,6 +82,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: getBottomNavigationBar(),
     );
   }
+
   Container getAppBar() {
     return Container(
       height: 60,
@@ -80,9 +90,9 @@ class _HomeState extends State<Home> {
         gradient: LinearGradient(
           colors: [
             Colors.black.withOpacity(.0),
-            Colors.black.withOpacity(.5),
+            Colors.black.withOpacity(.6),
             Colors.black.withOpacity(.8),
-            Colors.black.withOpacity(.9),
+            Colors.black.withOpacity(1),
             //add more colors for gradient
           ],
           begin: Alignment.bottomCenter, //begin of the gradient color
@@ -110,7 +120,7 @@ class _HomeState extends State<Home> {
             child: FittedBox(
               child: Text(
                 'Watch Ltr.',
-                style: titleTS.copyWith(fontSize: 35),
+                style: titleTS.copyWith(fontSize: 35, color: red),
               ),
             ),
           ),
