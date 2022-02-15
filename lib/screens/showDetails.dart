@@ -202,7 +202,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height:20,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -429,24 +429,27 @@ class _ShowDetailsState extends State<ShowDetails> {
                                           color: white.withOpacity(.7),
                                           fontSize: 14),
                                     ),
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemCount: provider.showDetails
-                                          .productionCompanies!.length
-                                          .toInt(),
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                            height: 20,
-                                            child: Text(
-                                              '- ${provider.showDetails.productionCompanies![index].name.toString()}',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: defaultTS.copyWith(
-                                                  color: white.withOpacity(.7),
-                                                  fontSize: 14),
-                                            ));
-                                      },
+                                    SizedBox(height: 2,),
+                                    Container(height: 120,
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: BouncingScrollPhysics(),
+                                        itemCount: provider.showDetails
+                                            .productionCompanies!.length
+                                            .toInt(),
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                              height: 20,
+                                              child: Text(
+                                                '- ${provider.showDetails.productionCompanies![index].name.toString()}',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: defaultTS.copyWith(
+                                                    color: white.withOpacity(.7),
+                                                    fontSize: 14),
+                                              ));
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
