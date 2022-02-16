@@ -5,7 +5,10 @@ import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
 import 'package:watch_ltr/screens/home.dart';
 import 'package:watch_ltr/screens/onBoarding.dart';
+import 'package:watch_ltr/screens/signUp.dart';
 import 'package:watch_ltr/screens/splash_screen.dart';
+
+import 'screens/SignIn.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +37,8 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashScreen.route: (context) => SplashScreen(),
           OnBoarding.route: (context) => OnBoarding(),
+          SignUp.route: (context) => SignUp(),
+          SignIn.route: (context) => SignIn(),
           Home.route: (context) => Home(),
         },
       ),

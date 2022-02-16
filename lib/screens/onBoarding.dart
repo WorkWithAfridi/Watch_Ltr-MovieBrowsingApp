@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:watch_ltr/constants/customColors.dart';
 import 'package:watch_ltr/screens/home.dart';
+import 'package:watch_ltr/screens/signUp.dart';
 
 import '../constants/customTextStyle.dart';
+import 'SignIn.dart';
 
 class OnBoarding extends StatelessWidget {
   static const route = '/onBoarding';
@@ -42,57 +44,98 @@ class OnBoarding extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          child: FittedBox(
-                            child: Text(
-                              'Watch Ltr.',
-                              style: titleTS,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .08,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          child: Text(
-                            "SEE WHAT'S NEXT",
-                            style: subTitleTS.copyWith(
-                                letterSpacing: 2, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
-                          child: Text(
-                            "Bookmark anything, anywhere.",
-                            style: defaultTS.copyWith(
-                                fontWeight: FontWeight.w400, letterSpacing: 1),
-                          ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .02,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 22),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(Home.route);
-                            },
-                            child: Card(
-                              elevation: 15,
-                              child: Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                color: black,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'JOIN NOW!!',
-                                  style: normalTitleTS,
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                child: FittedBox(
+                                  child: Text(
+                                    'Watch Ltr.',
+                                    style: titleTS,
+                                  ),
                                 ),
                               ),
-                            ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * .08,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                child: Text(
+                                  "SEE WHAT'S NEXT",
+                                  style: subTitleTS.copyWith(
+                                      letterSpacing: 2,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25),
+                                child: Text(
+                                  "Bookmark anything, anywhere.",
+                                  style: defaultTS.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: 1),
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * .02,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 22),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(SignUp.route);
+                                  },
+                                  child: Card(
+                                    elevation: 15,
+                                    child: Container(
+                                      height: 50,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: black,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'JOIN NOW!!',
+                                        style: normalTitleTS,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Powered By",
+                              style: defaultTS.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1,
+                                  fontSize: 10,
+                                  color: black),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              height: 10,
+                              width: double.infinity,
+                              child: Image.asset(
+                                'assets/theMovieDB_logo.png',
+                                fit: BoxFit.fitHeight,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            )
+                          ],
                         )
                       ],
                     ),
@@ -112,12 +155,17 @@ class OnBoarding extends StatelessWidget {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      'SIGN IN',
-                      style: defaultTS.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15,
-                        color: white.withOpacity(.6),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(SignIn.route);
+                      },
+                      child: Text(
+                        'SIGN IN',
+                        style: defaultTS.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          color: white.withOpacity(.6),
+                        ),
                       ),
                     ),
                     Text(
