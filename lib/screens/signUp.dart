@@ -51,7 +51,10 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.arrow_back, color: white,),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: white,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -64,7 +67,7 @@ class _SignUpState extends State<SignUp> {
                         child: FittedBox(
                           child: Text(
                             'Watch Ltr.',
-                            style: titleTS.copyWith(fontSize: 45),
+                            style: AppTitleTS.copyWith(fontSize: 45),
                           ),
                         ),
                       ),
@@ -73,8 +76,7 @@ class _SignUpState extends State<SignUp> {
                         child: Text(
                           "Your one stop solution for all your media queries.",
                           textAlign: TextAlign.center,
-                          style: defaultTS.copyWith(
-                              fontWeight: FontWeight.w400, letterSpacing: 0),
+                          style: defaultTS.copyWith(fontWeight: FontWeight.w900, fontSize: 11),
                         ),
                       ),
                       SizedBox(
@@ -136,15 +138,19 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.of(context).pushNamed(SignUp.route);
                               },
                               child: Card(
+                                color: Colors.transparent,
                                 elevation: 15,
                                 child: Container(
                                   height: 50,
                                   width: MediaQuery.of(context).size.width / 2,
-                                  color: black,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: black.withOpacity(.9),
+                                  ),
                                   alignment: Alignment.center,
                                   child: Text(
                                     'SIGN UP',
-                                    style: normalTitleTS,
+                                    style: TitleTS,
                                   ),
                                 ),
                               ),
@@ -161,17 +167,13 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     Text(
                       "Powered By",
-                      style: defaultTS.copyWith(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1,
-                          fontSize: 10,
-                          color: black),
+                      style: AuthorTS.copyWith(color: black),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                      height: 10,
+                      height: 15,
                       width: double.infinity,
                       child: Image.asset(
                         'assets/theMovieDB_logo.png',

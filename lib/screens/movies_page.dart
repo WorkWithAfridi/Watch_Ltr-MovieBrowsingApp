@@ -61,6 +61,7 @@ class _MoviesPageState extends State<MoviesPage> {
     );
   }
 
+
   Widget getBannerForHome(BuildContext context) {
     return Consumer<HomeProvider>(builder: (context, provider, childproperty) {
       return Container(
@@ -69,7 +70,7 @@ class _MoviesPageState extends State<MoviesPage> {
         child: Stack(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * .65,
               width: MediaQuery.of(context).size.width,
               child: Image.network(
                 getImageUrl(
@@ -79,7 +80,7 @@ class _MoviesPageState extends State<MoviesPage> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * .65,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Colors.red,
@@ -97,7 +98,7 @@ class _MoviesPageState extends State<MoviesPage> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery.of(context).size.height * .65,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: Colors.red,
@@ -114,38 +115,48 @@ class _MoviesPageState extends State<MoviesPage> {
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  getFilterForHome(context),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 75, right: 15),
-                    child: FittedBox(
-                      child: Text(
-                        provider.trendingMovies.results![0].title.toString(),
-                        style: subTitleTS.copyWith(fontSize: 40),
+            Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * .65,
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 75, right: 15),
+                        child: FittedBox(
+                          child: Text(
+                            provider.trendingMovies.results![0].title
+                                .toString(),
+                            style: TitleTS,
+                          ),
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 75, right: 15),
+                        child: Text(
+                          '      ${provider.trendingMovies.results![0].overview.toString()}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          textAlign: TextAlign.end,
+                          style: defaultTS,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 75, right: 15),
-                    child: Text(
-                      '      ${provider.trendingMovies.results![0].overview.toString()}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: defaultTS.copyWith(
-                          color: white.withOpacity(.7), fontSize: 14),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  )
-                ],
-              ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * .65,
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.centerLeft,
+                  child: getFilterForHome(context),
+                )
+              ],
             ),
           ],
         ),
@@ -156,7 +167,7 @@ class _MoviesPageState extends State<MoviesPage> {
   Container getFilterForHome(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 17),
-      alignment: Alignment.topLeft,
+      alignment: Alignment.centerLeft,
       child: RotatedBox(
         quarterTurns: 3,
         child: Container(
@@ -172,7 +183,7 @@ class _MoviesPageState extends State<MoviesPage> {
                 },
                 child: Text(
                   'TV Shows',
-                  style: subTitleTS.copyWith(
+                  style: TitleTS.copyWith(
                       fontSize: 18,
                       wordSpacing: 1,
                       letterSpacing: 1,
@@ -187,7 +198,7 @@ class _MoviesPageState extends State<MoviesPage> {
                 },
                 child: Text(
                   'Movies',
-                  style: subTitleTS.copyWith(
+                  style: TitleTS.copyWith(
                       fontSize: 18,
                       wordSpacing: 1,
                       letterSpacing: 1,
@@ -202,7 +213,7 @@ class _MoviesPageState extends State<MoviesPage> {
                 },
                 child: Text(
                   'My List',
-                  style: subTitleTS.copyWith(
+                  style: TitleTS.copyWith(
                       fontSize: 18,
                       wordSpacing: 1,
                       letterSpacing: 1,

@@ -29,7 +29,7 @@ class CustomTextField extends StatelessWidget {
       controller: textEditingController,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: defaultTS.copyWith(color: white.withOpacity(.5)),
+        hintStyle: defaultTS.copyWith(color: white.withOpacity(.3)),
         border: inputBorder,
         focusedBorder: inputBorder,
         enabledBorder: inputBorder,

@@ -28,7 +28,7 @@ class GetPopularMovies extends StatelessWidget {
               children: [
                 Text(
                   'Popular',
-                  style: subTitleTS.copyWith(color: white.withOpacity(.7)),
+                  style: TitleTS.copyWith(color: red),
                 ),
                 Container(
                   color: red,
@@ -36,9 +36,9 @@ class GetPopularMovies extends StatelessWidget {
                   child: Text(
                     'SEE MORE',
                     style: defaultTS.copyWith(
-                        color: white.withOpacity(.9),
+                        color: white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w900),
                   ),
                 ),
               ],
@@ -55,16 +55,16 @@ class GetPopularMovies extends StatelessWidget {
               itemCount: provider.playingNowMovies.results!.length - 1,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: index == provider.playingNowMovies.results!.length - 2
-                      ? EdgeInsets.only(left: 15, right: 15)
-                      : EdgeInsets.only(left: 15),
+                  padding:
+                      index == provider.playingNowMovies.results!.length - 2
+                          ? EdgeInsets.only(left: 15, right: 15)
+                          : EdgeInsets.only(left: 15),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ShowDetails(
-                            showId: provider
-                                .playingNowMovies.results![index].id
+                            showId: provider.playingNowMovies.results![index].id
                                 .toString(),
                           ),
                         ),
@@ -82,8 +82,8 @@ class GetPopularMovies extends StatelessWidget {
                             width: 300,
                             child: Image.network(
                               getImageUrl(
-                                provider.playingNowMovies.results![index]
-                                    .posterPath
+                                provider
+                                    .playingNowMovies.results![index].posterPath
                                     .toString(),
                               ),
                               fit: BoxFit.cover,
@@ -96,15 +96,13 @@ class GetPopularMovies extends StatelessWidget {
                             provider.playingNowMovies.results![index].title
                                 .toString(),
                             overflow: TextOverflow.ellipsis,
-                            style: subTitleTS.copyWith(
-                                color: white.withOpacity(.9), fontSize: 30),
+                            style: TitleTS,
                           ),
                           Text(
                             'Released On: ${provider.playingNowMovies.results![index].releaseDate.toString()}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style: defaultTS.copyWith(
-                                color: white.withOpacity(.6), fontSize: 12),
+                            style: defaultTS.copyWith(color: white.withOpacity(.5)),
                           ),
                           SizedBox(
                             height: 5,
@@ -114,8 +112,7 @@ class GetPopularMovies extends StatelessWidget {
                                 .toString(),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style: defaultTS.copyWith(
-                                color: white.withOpacity(.7), fontSize: 14),
+                            style: defaultTS
                           ),
                         ],
                       ),

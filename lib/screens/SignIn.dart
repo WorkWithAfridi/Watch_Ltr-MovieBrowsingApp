@@ -52,7 +52,10 @@ class _SignInState extends State<SignIn> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(Icons.arrow_back, color: white,),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: white,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -65,7 +68,7 @@ class _SignInState extends State<SignIn> {
                         child: FittedBox(
                           child: Text(
                             'Watch Ltr.',
-                            style: titleTS.copyWith(fontSize: 45),
+                            style: AppTitleTS,
                           ),
                         ),
                       ),
@@ -74,8 +77,7 @@ class _SignInState extends State<SignIn> {
                         child: Text(
                           "Your one stop solution for all your media queries.",
                           textAlign: TextAlign.center,
-                          style: defaultTS.copyWith(
-                              fontWeight: FontWeight.w400, letterSpacing: 0),
+                          style: defaultTS.copyWith(fontWeight: FontWeight.w900, fontSize: 11),
                         ),
                       ),
                       SizedBox(
@@ -102,7 +104,7 @@ class _SignInState extends State<SignIn> {
                           color: Colors.transparent,
                           child: CustomTextField(
                             textEditingController:
-                            passwordTextEditingController,
+                                passwordTextEditingController,
                             hintText: 'Please enter your password',
                             textInputType: TextInputType.text,
                             isPass: true,
@@ -119,18 +121,23 @@ class _SignInState extends State<SignIn> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushReplacementNamed(Home.route);
+                                Navigator.of(context)
+                                    .pushReplacementNamed(Home.route);
                               },
                               child: Card(
+                                color: Colors.transparent,
                                 elevation: 15,
                                 child: Container(
                                   height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: black.withOpacity(.9),
+                                  ),
                                   width: MediaQuery.of(context).size.width / 2,
-                                  color: black,
                                   alignment: Alignment.center,
                                   child: Text(
                                     'SIGN IN',
-                                    style: normalTitleTS,
+                                    style: TitleTS,
                                   ),
                                 ),
                               ),
@@ -147,17 +154,13 @@ class _SignInState extends State<SignIn> {
                   children: [
                     Text(
                       "Powered By",
-                      style: defaultTS.copyWith(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1,
-                          fontSize: 10,
-                          color: black),
+                      style: AuthorTS.copyWith(color: black),
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Container(
-                      height: 10,
+                      height: 15,
                       width: double.infinity,
                       child: Image.asset(
                         'assets/theMovieDB_logo.png',

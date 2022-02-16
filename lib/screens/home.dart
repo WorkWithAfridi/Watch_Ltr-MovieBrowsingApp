@@ -1,13 +1,15 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customTextStyle.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/screens/movies_page.dart';
-import 'package:watch_ltr/widgets/CustomFont.dart';
+import 'package:watch_ltr/screens/widgets/getPopularMovies.dart';
+import 'package:watch_ltr/screens/widgets/getTrendingMovies.dart';
+import 'package:watch_ltr/screens/widgets/getUpComingMovies.dart';
 
 import '../constants/customColors.dart';
+import '../functions/getImageUrl.dart';
 
 class Home extends StatefulWidget {
   static const route = '/Home';
@@ -33,7 +35,10 @@ class _HomeState extends State<Home> {
     await homeProvider.getTrendingMovies();
     await homeProvider.getPlayingNowMovies();
     await homeProvider.getUpcomingMovies();
+    // await Future.delayed(Duration(seconds: 3));
     homeProvider.isLoading = false;
+    // ScaffoldMessenger.of(context)
+    //     .showSnackBar(SnackBar(content: Text('UI Update')));
   }
 
   GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey();
@@ -48,7 +53,7 @@ class _HomeState extends State<Home> {
       ),
       key: scaffoldStateKey,
       drawer: Drawer(
-        backgroundColor: red,
+        backgroundColor: black,
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -71,13 +76,13 @@ class _HomeState extends State<Home> {
                     children: [
                       Icon(
                         FontAwesomeIcons.signOutAlt,
-                        color: black,
+                        color: white,
                         size: 22,
                       ),
                       const SizedBox(
-                        width: 5,
+                        width:10,
                       ),
-                      Text('Sign Out', style: defaultTS.copyWith(color: black))
+                      Text('Sign Out', style: TitleTS)
                     ],
                   ),
                 ),
@@ -90,46 +95,54 @@ class _HomeState extends State<Home> {
         ),
       ),
       backgroundColor: black,
-      body: Consumer<HomeProvider>(builder: (context, provider, childProperty) {
-        return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: [
-                provider.isLoading
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 60,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child:
+            Consumer<HomeProvider>(builder: (context, provider, childProperty) {
+          return Stack(
+            children: [
+              provider.isLoading
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 60,
+                        ),
+                        Center(
+                          child: CircularProgressIndicator(
+                            color: red,
                           ),
-                          Center(
-                            child: CircularProgressIndicator(
-                              color: red,
-                            ),
-                          ),
-                        ],
-                      )
-                    : MoviesPage(),
-                Container(
-                  height: MediaQuery.of(context).size.height,
+                        ),
+                      ],
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: MoviesPage()
+                    ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  height: 50,
                   // color: Colors.pink,
-                  child: Column(
-                    children: [
-                      getAppBar(),
-                    ],
-                  ),
+                  child: getAppBar(),
                 ),
-              ],
-            ));
-      }),
+              ),
+            ],
+          );
+        }),
+      ),
       bottomNavigationBar: getBottomNavigationBar(),
     );
   }
 
+
   Container getAppBar() {
     return Container(
+      width: MediaQuery.of(context).size.width,
       height: 60,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -167,7 +180,7 @@ class _HomeState extends State<Home> {
             child: FittedBox(
               child: Text(
                 'Watch Ltr.',
-                style: titleTS.copyWith(fontSize: 35, color: red),
+                style: TitleTS.copyWith(color: red),
               ),
             ),
           ),
@@ -201,6 +214,7 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           icon: Icon(Icons.search, size: 27),
           label: 'SEARCH',
+
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark, size: 27),

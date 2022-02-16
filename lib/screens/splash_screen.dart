@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:watch_ltr/constants/customTextStyle.dart';
 import 'package:watch_ltr/screens/onBoarding.dart';
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void triggerSplashScreen() {
     Future.delayed(
-      Duration(seconds: 2),
+      Duration(seconds: 3),
     ).then(
       (value) {
         Navigator.of(context).pushNamed(OnBoarding.route);
@@ -43,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 35,),
             Container(
               height: MediaQuery.of(context).size.height * .2,
               width: MediaQuery.of(context).size.height * .2,
@@ -51,11 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Text(
               'WATCH LTR.',
-              style: titleTS.copyWith(color: white, fontSize: 50, height: .7),
+              style: AppTitleTS,
             ),
             Text(
               'by KYOTO',
-              style: titleTS.copyWith(fontSize: 20, color: red, height: .8),
+              style: AuthorTS,
             )
           ],
         ),

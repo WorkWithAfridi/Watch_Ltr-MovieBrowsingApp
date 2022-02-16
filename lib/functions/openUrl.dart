@@ -60,7 +60,7 @@ class _OpenWebViewState extends State<OpenWebView> {
             backgroundColor: black,
             title: Text(
               'Close?',
-              style: subTitleTS,
+              style: TitleTS,
             ),
             content: Text(
               'Are you sure, you want to close this window?',

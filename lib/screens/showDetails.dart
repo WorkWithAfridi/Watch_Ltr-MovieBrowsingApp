@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
 import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
+import 'package:watch_ltr/screens/widgets/getRecommendedMovies.dart';
 
 import '../constants/customColors.dart';
 import '../constants/customTextStyle.dart';
@@ -28,7 +30,10 @@ class _ShowDetailsState extends State<ShowDetails> {
     print(widget.showId);
     ShowDetailsProvider showDetailsProvider =
         Provider.of<ShowDetailsProvider>(context, listen: false);
+    showDetailsProvider.isLoading = true;
     await showDetailsProvider.getShowDetails(widget.showId);
+    await showDetailsProvider.getRecommendedMovies(widget.showId);
+    await showDetailsProvider.getReviews(widget.showId);
 
     showDetailsProvider.isLoading = false;
     // await Future.delayed(
@@ -164,36 +169,32 @@ class _ShowDetailsState extends State<ShowDetails> {
                               Positioned(
                                 bottom: 0,
                                 left: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
+                                right: 0,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Text(
                                         provider.showDetails.title.toString(),
                                         overflow: TextOverflow.ellipsis,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: subTitleTS.copyWith(
-                                            color: white.withOpacity(.9),
-                                            fontSize: 40),
+                                        style: AppTitleTS.copyWith(height: 1),
                                       ),
-                                      Text(
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15),
+                                      child: Text(
                                         '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
-                                        style: defaultTS.copyWith(
-                                          color: white.withOpacity(.6),
-                                          height: .5,
-                                          fontSize: 16,
-                                        ),
+                                        style: defaultTS.copyWith(fontSize: 15),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -238,10 +239,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     textAlign: TextAlign.center,
-                                    style: defaultTS.copyWith(
-                                      color: white.withOpacity(.4),
-                                      fontSize: 12,
-                                    ),
+                                    style: defaultTS,
                                   ),
                                 ),
                               );
@@ -286,27 +284,20 @@ class _ShowDetailsState extends State<ShowDetails> {
                                   provider.showDetails.voteAverage.toString(),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 6,
-                                  style: defaultTS.copyWith(
-                                      color: white.withOpacity(1),
-                                      fontSize: 25),
+                                  style: TitleTS.copyWith(color: red),
                                 ),
                                 Text(
                                   ' /10',
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 6,
-                                  style: defaultTS.copyWith(
-                                      color: white.withOpacity(.6),
-                                      fontSize: 18),
+                                  style: TitleTS,
                                 ),
                               ],
                             ),
-                            Text(
-                              'Average Rating',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 6,
-                              style: defaultTS.copyWith(
-                                  color: white.withOpacity(.8), fontSize: 15),
-                            ),
+                            Text('Average Rating',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 6,
+                                style: defaultTS),
                           ],
                         ),
                         Column(
@@ -323,19 +314,14 @@ class _ShowDetailsState extends State<ShowDetails> {
                                   provider.showDetails.voteCount.toString(),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 6,
-                                  style: defaultTS.copyWith(
-                                      color: white.withOpacity(1),
-                                      fontSize: 25),
+                                  style: TitleTS.copyWith(color: red),
                                 ),
                               ],
                             ),
-                            Text(
-                              'Vote Count',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 6,
-                              style: defaultTS.copyWith(
-                                  color: white.withOpacity(.8), fontSize: 15),
-                            ),
+                            Text('Vote Count',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 6,
+                                style: defaultTS),
                           ],
                         ),
                         // Column(
@@ -407,18 +393,14 @@ class _ShowDetailsState extends State<ShowDetails> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      provider.showDetails.title.toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: titleTS.copyWith(fontSize: 25),
-                                    ),
+                                    Text(provider.showDetails.title.toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TitleTS),
                                     Text(
                                       provider.showDetails.tagline.toString(),
                                       maxLines: 3,
-                                      style: defaultTS.copyWith(
-                                          color: white.withOpacity(.7),
-                                          fontSize: 14),
+                                      style: defaultTS,
                                     ),
                                     SizedBox(
                                       height: 10,
@@ -426,9 +408,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                     Text(
                                       'Publishers:',
                                       maxLines: 3,
-                                      style: defaultTS.copyWith(
-                                          color: white.withOpacity(.7),
-                                          fontSize: 14),
+                                      style: defaultTS,
                                     ),
                                     SizedBox(
                                       height: 2,
@@ -448,10 +428,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                                 '- ${provider.showDetails.productionCompanies![index].name.toString()}',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: defaultTS.copyWith(
-                                                    color:
-                                                        white.withOpacity(.7),
-                                                    fontSize: 14),
+                                                style: defaultTS,
                                               ));
                                         },
                                       ),
@@ -466,16 +443,12 @@ class _ShowDetailsState extends State<ShowDetails> {
                                       children: [
                                         Text(
                                           'Status: ',
-                                          style: defaultTS.copyWith(
-                                              color: white.withOpacity(.7),
-                                              fontSize: 14),
+                                          style: defaultTS,
                                         ),
                                         Text(
                                           provider.showDetails.status
                                               .toString(),
-                                          style: defaultTS.copyWith(
-                                              color: white.withOpacity(.7),
-                                              fontSize: 14),
+                                          style: defaultTS,
                                         )
                                       ],
                                     ),
@@ -484,7 +457,13 @@ class _ShowDetailsState extends State<ShowDetails> {
                                     ),
                                     GestureDetector(
                                       onTap: () async {
-                                        Navigator.of(context).pushNamed(OpenWebView.route, arguments: {'Url' : provider.showDetails.homepage.toString()});
+                                        Navigator.of(context).pushNamed(
+                                            OpenWebView.route,
+                                            arguments: {
+                                              'Url': provider
+                                                  .showDetails.homepage
+                                                  .toString()
+                                            });
                                       },
                                       child: Container(
                                         height: 30,
@@ -493,7 +472,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                         alignment: Alignment.center,
                                         child: Text(
                                           'Learn More',
-                                          style: subTitleTS,
+                                          style: TitleTS,
                                         ),
                                       ),
                                     ),
@@ -519,12 +498,15 @@ class _ShowDetailsState extends State<ShowDetails> {
                       color: white.withOpacity(.1),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10),
+                        horizontal: 15.0, vertical: 0),
                     child: Text(
                       'Storyline',
-                      style: subTitleTS,
+                      style: TitleTS.copyWith(color: red),
                     ),
                   ),
                   Padding(
@@ -532,9 +514,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                         horizontal: 15.0, vertical: 0),
                     child: Text(
                       provider.showDetails.overview.toString(),
-                      style: defaultTS.copyWith(
-                        color: white.withOpacity(.5),
-                      ),
+                      style: defaultTS,
                     ),
                   ),
                   SizedBox(
@@ -548,8 +528,139 @@ class _ShowDetailsState extends State<ShowDetails> {
                     ),
                   ),
                   SizedBox(
-                    height: 25,
+                    height: 10,
                   ),
+                  provider.reviews.results!.length > 1
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'REVIEWS',
+                                    style: TitleTS.copyWith(color: red),
+                                  ),
+                                  // Container(
+                                  //   color: red,
+                                  //   padding:
+                                  //       EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                  //   child: Text(
+                                  //     'SEE MORE',
+                                  //     style: defaultTS.copyWith(
+                                  //         color: white,
+                                  //         fontSize: 14,
+                                  //         fontWeight: FontWeight.w900),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: provider.reviews.results!.length > 4
+                                  ? 80 * 4
+                                  : 80 *provider.reviews.results!.length.toDouble(),
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount:
+                                    provider.reviews.results!.length.toInt(),
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 15),
+                                    // height: 100,
+                                    width: MediaQuery.of(context).size.width,
+                                    // color: Colors.green,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          provider
+                                              .reviews.results![index].author
+                                              .toString(),
+                                          style: TitleTS.copyWith(fontSize: 20),
+                                        ),
+                                        Text(
+                                          provider
+                                              .reviews.results![index].content
+                                              .toString(),
+                                          style: defaultTS,
+                                          maxLines: 3,
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(
+                                    FontAwesomeIcons.ellipsisH,
+                                    color: red,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Divider(
+                                height: 1,
+                                color: white.withOpacity(.1),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  provider.recommendedMovies.results!.length == 0
+                      ? Container()
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GetRecommendedMovies(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Divider(
+                                height: 1,
+                                color: white.withOpacity(.1),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        )
                 ],
               ),
             ),
@@ -583,9 +694,6 @@ class _ShowDetailsState extends State<ShowDetails> {
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                ShowDetailsProvider showDetailsProvider =
-                    Provider.of<ShowDetailsProvider>(context, listen: false);
-                showDetailsProvider.isLoading = true;
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -598,7 +706,7 @@ class _ShowDetailsState extends State<ShowDetails> {
             child: FittedBox(
               child: Text(
                 'Watch Ltr.',
-                style: titleTS.copyWith(fontSize: 35, color: red),
+                style: TitleTS.copyWith(color: red),
               ),
             ),
           ),

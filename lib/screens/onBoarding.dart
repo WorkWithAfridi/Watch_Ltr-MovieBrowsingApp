@@ -54,7 +54,7 @@ class OnBoarding extends StatelessWidget {
                                 child: FittedBox(
                                   child: Text(
                                     'Watch Ltr.',
-                                    style: titleTS,
+                                    style: AppTitleTS.copyWith(fontSize: 45),
                                   ),
                                 ),
                               ),
@@ -66,18 +66,14 @@ class OnBoarding extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 25),
                                 child: Text(
                                   "SEE WHAT'S NEXT",
-                                  style: subTitleTS.copyWith(
-                                      letterSpacing: 2,
-                                      fontWeight: FontWeight.bold),
+                                  style: TitleTS,
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 25),
                                 child: Text(
                                   "Bookmark anything, anywhere.",
-                                  style: defaultTS.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1),
+                                  style: defaultTS,
                                 ),
                               ),
                               SizedBox(
@@ -93,14 +89,18 @@ class OnBoarding extends StatelessWidget {
                                   },
                                   child: Card(
                                     elevation: 15,
+                                    color: Colors.transparent,
                                     child: Container(
                                       height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: black.withOpacity(.9),
+                                      ),
                                       width: MediaQuery.of(context).size.width,
-                                      color: black,
                                       alignment: Alignment.center,
                                       child: Text(
                                         'JOIN NOW!!',
-                                        style: normalTitleTS,
+                                        style: TitleTS,
                                       ),
                                     ),
                                   ),
@@ -115,17 +115,13 @@ class OnBoarding extends StatelessWidget {
                           children: [
                             Text(
                               "Powered By",
-                              style: defaultTS.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1,
-                                  fontSize: 10,
-                                  color: black),
+                              style: AuthorTS.copyWith(color: black),
                             ),
                             SizedBox(
                               height: 5,
                             ),
                             Container(
-                              height: 10,
+                              height: 15,
                               width: double.infinity,
                               child: Image.asset(
                                 'assets/theMovieDB_logo.png',

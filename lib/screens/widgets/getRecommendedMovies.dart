@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
+import 'package:watch_ltr/provider/show_details_provider.dart';
 
 import '../../constants/customColors.dart';
 import '../../constants/customTextStyle.dart';
 import '../../provider/home_provider.dart';
 import '../showDetails.dart';
 
-class GetUpComingMovies extends StatelessWidget {
-  const GetUpComingMovies({Key? key}) : super(key: key);
+class GetRecommendedMovies extends StatelessWidget {
+  const GetRecommendedMovies({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(builder: (context, provider, childProperty) {
+    return Consumer<ShowDetailsProvider>(builder: (context, provider, childProperty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +25,7 @@ class GetUpComingMovies extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'COMING SOON',
+                  'RECOMMENDED MOVIES',
                   style: TitleTS.copyWith(color: red),
                 ),
                 Container(
@@ -43,16 +44,16 @@ class GetUpComingMovies extends StatelessWidget {
           ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 430,
+            height: 420,
             // width: 200,
             child: ListView.builder(
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: provider.upcomingMovies.results!.length,
+              itemCount: provider.recommendedMovies.results!.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: index == provider.upcomingMovies.results!.length
+                  padding: index == provider.recommendedMovies.results!.length
                       ? EdgeInsets.only(left: 15, right: 15)
                       : EdgeInsets.only(left: 15),
                   child: GestureDetector(
@@ -61,7 +62,7 @@ class GetUpComingMovies extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => ShowDetails(
                             showId: provider
-                                .upcomingMovies.results![index].id
+                                .recommendedMovies.results![index].id
                                 .toString(),
                           ),
                         ),
@@ -79,7 +80,7 @@ class GetUpComingMovies extends StatelessWidget {
                             width: 200,
                             child: Image.network(
                               getImageUrl(provider
-                                  .upcomingMovies.results![index].posterPath
+                                  .recommendedMovies.results![index].posterPath
                                   .toString()),
                               fit: BoxFit.cover,
                             ),
@@ -88,13 +89,13 @@ class GetUpComingMovies extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            provider.upcomingMovies.results![index].title
+                            provider.recommendedMovies.results![index].title
                                 .toString(),
                             overflow: TextOverflow.ellipsis,
                             style: TitleTS,
                           ),
                           Text(
-                            'Release Date: ${provider.upcomingMovies.results![index].releaseDate.toString()}',
+                            'Release Date: ${provider.recommendedMovies.results![index].releaseDate.toString()}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: defaultTS.copyWith(color: white.withOpacity(.5)),
@@ -103,10 +104,10 @@ class GetUpComingMovies extends StatelessWidget {
                             height: 5,
                           ),
                           Text(
-                            provider.upcomingMovies.results![index].overview
-                                .toString(),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 3,
+                              provider.recommendedMovies.results![index].overview
+                                  .toString(),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                               style: defaultTS
                           ),
                           SizedBox(

@@ -21,41 +21,41 @@ class HomeProvider extends ChangeNotifier {
   }
 
   Future<void> getTrendingMovies() async {
-    try {
+    // try {
       String url =
           'https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1&region=us';
       Response httpResponse = await get(Uri.parse(url));
       var decodeJson = jsonDecode(httpResponse.body);
       trendingMovies = TrendingNowMovies.fromJson(decodeJson);
       return;
-    } catch (e) {
-      print(e.toString());
-    }
+    // } catch (e) {
+    //   print(e.toString());
+    // }
   }
 
   Future<void> getPlayingNowMovies() async {
-    try {
+    // try {
       String url =
           'https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1&region=us';
       Response httpResponse = await get(Uri.parse(url));
       var decodeJson = jsonDecode(httpResponse.body);
       playingNowMovies = PlayingNowMovies.fromJson(decodeJson);
       return;
-    } catch (e) {
-      print(e.toString());
-    }
+    // } catch (e) {
+    //   print(e.toString());
+    // }
   }
 
   Future<void> getUpcomingMovies() async {
-    try {
+    // try {
       String url =
           'https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1&region=us';
       Response httpResponse = await get(Uri.parse(url));
       var decodeJson = jsonDecode(httpResponse.body);
       upcomingMovies = UpcomingMovies.fromJson(decodeJson);
       return;
-    } catch (e) {
-      print(e.toString());
-    }
+    // } catch (e) {
+    //   print(e.toString());
+    // }
   }
 }
