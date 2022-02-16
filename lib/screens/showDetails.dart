@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
+import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
 
 import '../constants/customColors.dart';
@@ -181,7 +182,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                             fontSize: 40),
                                       ),
                                       Text(
-                                        '(${provider.showDetails.releaseDate.toString().substring(0, 4)})',
+                                        '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
@@ -202,7 +203,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                     ),
                   ),
                   SizedBox(
-                    height:20,
+                    height: 20,
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
@@ -429,8 +430,11 @@ class _ShowDetailsState extends State<ShowDetails> {
                                           color: white.withOpacity(.7),
                                           fontSize: 14),
                                     ),
-                                    SizedBox(height: 2,),
-                                    Container(height: 120,
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Container(
+                                      height: 120,
                                       child: ListView.builder(
                                         shrinkWrap: true,
                                         physics: BouncingScrollPhysics(),
@@ -445,7 +449,8 @@ class _ShowDetailsState extends State<ShowDetails> {
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: defaultTS.copyWith(
-                                                    color: white.withOpacity(.7),
+                                                    color:
+                                                        white.withOpacity(.7),
                                                     fontSize: 14),
                                               ));
                                         },
@@ -477,14 +482,19 @@ class _ShowDetailsState extends State<ShowDetails> {
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Container(
-                                      height: 30,
-                                      width: double.infinity,
-                                      color: red,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        'Learn More',
-                                        style: subTitleTS,
+                                    GestureDetector(
+                                      onTap: () async {
+                                        Navigator.of(context).pushNamed(OpenWebView.route, arguments: {'Url' : provider.showDetails.homepage.toString()});
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: double.infinity,
+                                        color: red,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'Learn More',
+                                          style: subTitleTS,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(

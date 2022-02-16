@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customTextStyle.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> {
     homeProvider.isLoading = false;
   }
 
+  GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +44,49 @@ class _HomeState extends State<Home> {
         preferredSize: Size.fromHeight(0),
         child: AppBar(
           backgroundColor: Colors.black,
+        ),
+      ),
+      key: scaffoldStateKey,
+      drawer: Drawer(
+        backgroundColor: red,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                    // color: Colors.blue,
+                    ),
+              ),
+              InkWell(
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  height: 45,
+                  child: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.signOutAlt,
+                        color: black,
+                        size: 22,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text('Sign Out', style: defaultTS.copyWith(color: black))
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
         ),
       ),
       backgroundColor: black,
@@ -108,7 +153,9 @@ class _HomeState extends State<Home> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 1, vertical: 5),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                scaffoldStateKey.currentState!.openDrawer();
+              },
               icon: Icon(
                 Icons.menu,
                 color: white,

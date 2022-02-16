@@ -119,7 +119,7 @@ class _SignInState extends State<SignIn> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context).pushNamed(Home.route);
+                                Navigator.of(context).pushReplacementNamed(Home.route);
                               },
                               child: Card(
                                 elevation: 15,

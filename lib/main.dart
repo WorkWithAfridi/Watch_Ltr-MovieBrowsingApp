@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customColors.dart';
+import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
 import 'package:watch_ltr/screens/home.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         routes: {
           SplashScreen.route: (context) => SplashScreen(),
           OnBoarding.route: (context) => OnBoarding(),
+          OpenWebView.route: (context) => OpenWebView(),
           SignUp.route: (context) => SignUp(),
           SignIn.route: (context) => SignIn(),
           Home.route: (context) => Home(),

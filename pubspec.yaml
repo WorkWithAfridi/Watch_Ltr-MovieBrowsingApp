@@ -41,6 +41,7 @@ dependencies:
   intl: any
   date_format: any
   lottie: any
+  webview_flutter: any
 
 dev_dependencies:
   flutter_test:

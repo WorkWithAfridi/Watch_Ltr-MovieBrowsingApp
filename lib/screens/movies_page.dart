@@ -31,8 +31,29 @@ class _MoviesPageState extends State<MoviesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getBannerForHome(context),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                height: 1,
+                color: white.withOpacity(.1),
+              ),
+            ),
             GetPopularMovies(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                height: 1,
+                color: white.withOpacity(.1),
+              ),
+            ),
             GetTrendingMovies(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                height: 1,
+                color: white.withOpacity(.1),
+              ),
+            ),
             GetUpComingMovies(),
           ],
         ),
