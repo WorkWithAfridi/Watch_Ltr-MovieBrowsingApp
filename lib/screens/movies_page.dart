@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
 import 'package:watch_ltr/screens/widgets/getPopularMovies.dart';
+import 'package:watch_ltr/screens/widgets/getTopRatedMoviesOfAllTime.dart';
 import 'package:watch_ltr/screens/widgets/getTrendingMovies.dart';
 import 'package:watch_ltr/screens/widgets/getUpComingMovies.dart';
 
@@ -47,6 +48,7 @@ class _MoviesPageState extends State<MoviesPage> {
               ),
             ),
             GetTrendingMovies(),
+            SizedBox(height: 15,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Divider(
@@ -55,6 +57,14 @@ class _MoviesPageState extends State<MoviesPage> {
               ),
             ),
             GetUpComingMovies(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Divider(
+                height: 1,
+                color: white.withOpacity(.1),
+              ),
+            ),
+            GetTopRatedMovies(),
           ],
         ),
       ),

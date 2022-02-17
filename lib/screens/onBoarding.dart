@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:watch_ltr/constants/customColors.dart';
-import 'package:watch_ltr/screens/home.dart';
+import 'package:watch_ltr/screens/homeTab.dart';
 import 'package:watch_ltr/screens/signUp.dart';
 
 import '../constants/customTextStyle.dart';

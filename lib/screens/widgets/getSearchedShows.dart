@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
+import 'package:watch_ltr/provider/search_provider.dart';
 
 import '../../constants/customColors.dart';
 import '../../constants/customTextStyle.dart';
 import '../../provider/home_provider.dart';
 import '../showDetails.dart';
 
-class GetTrendingMovies extends StatelessWidget {
-  const GetTrendingMovies({Key? key}) : super(key: key);
+class GetSearchedShows extends StatelessWidget {
+  const GetSearchedShows({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(builder: (context, provider, childProperty) {
+    return Consumer<SearchProvider>(builder: (context, provider, childProperty) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,20 +25,20 @@ class GetTrendingMovies extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Trending - TOP 10',
+                  'Search Result',
                   style: TitleTS.copyWith(color: red),
                 ),
-                Container(
-                  color: red,
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                  child: Text(
-                    'SEE MORE',
-                    style: defaultTS.copyWith(
-                        color: white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900),
-                  ),
-                ),
+                // Container(
+                //   color: red,
+                //   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                //   child: Text(
+                //     'SEE MORE',
+                //     style: defaultTS.copyWith(
+                //         color: white,
+                //         fontSize: 14,
+                //         fontWeight: FontWeight.w900),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -50,7 +51,7 @@ class GetTrendingMovies extends StatelessWidget {
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
-              itemCount: 10,
+              itemCount: provider.search.results!.length.toInt(),
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(left: 15, right: 0),
@@ -59,7 +60,7 @@ class GetTrendingMovies extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ShowDetails(
-                            showId: provider.trendingMovies.results![index].id
+                            showId: provider.search.results![index].id
                                 .toString(),
                           ),
                         ),
@@ -77,9 +78,7 @@ class GetTrendingMovies extends StatelessWidget {
                                 height: 300,
                                 width: 200,
                                 child: Image.network(
-                                  getImageUrl(provider
-                                      .trendingMovies.results![index].posterPath
-                                      .toString()),
+                                  getImageUrl(provider.search.results![index].posterPath.toString()),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -101,14 +100,12 @@ class GetTrendingMovies extends StatelessWidget {
                                       height: 10,
                                     ),
                                     Text(
-                                      provider
-                                          .trendingMovies.results![index].title
-                                          .toString(),
+                                      provider.search.results![index].originalTitle.toString(),
                                       overflow: TextOverflow.ellipsis,
                                       style: TitleTS,
                                     ),
                                     Text(
-                                      'Released On: ${provider.trendingMovies.results![index].releaseDate.toString()}',
+                                      'Released On: ${provider.search.results![index].releaseDate.toString()}',
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 2,
                                       style: defaultTS.copyWith(
@@ -118,7 +115,7 @@ class GetTrendingMovies extends StatelessWidget {
                                       height: 5,
                                     ),
                                     Text(
-                                        provider.trendingMovies.results![index]
+                                        provider.search.results![index]
                                             .overview
                                             .toString(),
                                         overflow: TextOverflow.ellipsis,
@@ -129,9 +126,9 @@ class GetTrendingMovies extends StatelessWidget {
                                     ),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.star,
@@ -142,7 +139,7 @@ class GetTrendingMovies extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(
-                                          '${provider.trendingMovies.results![index].voteAverage.toString()}',
+                                          '${provider.search.results![index].voteAverage.toString()}',
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 6,
                                           style: defaultTS.copyWith(

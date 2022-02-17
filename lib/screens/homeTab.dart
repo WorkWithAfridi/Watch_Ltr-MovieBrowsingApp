@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customTextStyle.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/screens/movies_page.dart';
+import 'package:watch_ltr/screens/searchTab.dart';
 import 'package:watch_ltr/screens/widgets/getPopularMovies.dart';
 import 'package:watch_ltr/screens/widgets/getTrendingMovies.dart';
 import 'package:watch_ltr/screens/widgets/getUpComingMovies.dart';
@@ -11,15 +12,15 @@ import 'package:watch_ltr/screens/widgets/getUpComingMovies.dart';
 import '../constants/customColors.dart';
 import '../functions/getImageUrl.dart';
 
-class Home extends StatefulWidget {
+class HomeTab extends StatefulWidget {
   static const route = '/Home';
-  const Home({Key? key}) : super(key: key);
+  const HomeTab({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomeTabState createState() => _HomeTabState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeTabState extends State<HomeTab> {
   int currentIndex = 0;
   String filterForHome = 'movies';
   @override
@@ -35,6 +36,7 @@ class _HomeState extends State<Home> {
     await homeProvider.getTrendingMovies();
     await homeProvider.getPlayingNowMovies();
     await homeProvider.getUpcomingMovies();
+    await homeProvider.getTopRatedMoviesOfAllTime();
     // await Future.delayed(Duration(seconds: 3));
     homeProvider.isLoading = false;
     // ScaffoldMessenger.of(context)
@@ -44,6 +46,64 @@ class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> scaffoldStateKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    List<Widget> Screens = [
+      Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Consumer<HomeProvider>(
+          builder: (context, provider, childProperty) {
+            return Stack(
+              children: [
+                provider.isLoading
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Center(
+                            child: CircularProgressIndicator(
+                              color: red,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        child: MoviesPage()),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    height: 50,
+                    // color: Colors.pink,
+                    child: getAppBar(),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: SearchTab(),
+      ),
+      Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: black,
+      ),
+      Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: white,
+      ),
+    ];
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0),
@@ -80,7 +140,7 @@ class _HomeState extends State<Home> {
                         size: 22,
                       ),
                       const SizedBox(
-                        width:10,
+                        width: 10,
                       ),
                       Text('Sign Out', style: TitleTS)
                     ],
@@ -98,47 +158,22 @@ class _HomeState extends State<Home> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child:
-            Consumer<HomeProvider>(builder: (context, provider, childProperty) {
-          return Stack(
-            children: [
-              provider.isLoading
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 60,
-                        ),
-                        Center(
-                          child: CircularProgressIndicator(
-                            color: red,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: MoviesPage()
-                    ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  height: 50,
-                  // color: Colors.pink,
-                  child: getAppBar(),
-                ),
-              ),
-            ],
-          );
-        }),
+        child: PageView.builder(
+          itemCount: 4,
+          physics: NeverScrollableScrollPhysics(),
+          onPageChanged: (value) {
+            setState(() {
+              currentIndex = value;
+            });
+          },
+          itemBuilder: (context, index) {
+            return Screens[currentIndex];
+          },
+        ),
       ),
       bottomNavigationBar: getBottomNavigationBar(),
     );
   }
-
 
   Container getAppBar() {
     return Container(
@@ -214,7 +249,6 @@ class _HomeState extends State<Home> {
         BottomNavigationBarItem(
           icon: Icon(Icons.search, size: 27),
           label: 'SEARCH',
-
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark, size: 27),

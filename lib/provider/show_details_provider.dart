@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:watch_ltr/constants/API_KEY.dart';
 import 'package:watch_ltr/model/show_details.dart';
+import 'package:watch_ltr/model/similar_movies.dart';
 
 import '../model/RecommendedMovies.dart';
 import '../model/Reviews.dart';
@@ -21,6 +22,7 @@ class ShowDetailsProvider extends ChangeNotifier {
   late ShowDetails showDetails;
   late RecommendedMovies recommendedMovies;
   late Reviews reviews;
+  late SimilarMovies similarMovies;
   Future<void> getReviews(String showID) async {
     // try {
       String url =
@@ -29,6 +31,19 @@ class ShowDetailsProvider extends ChangeNotifier {
       Response httpResponse = await get(Uri.parse(url));
       var decodeJson = jsonDecode(httpResponse.body);
       reviews = Reviews.fromJson(decodeJson);
+      return;
+    // } catch (e) {
+    //   print(e.toString());
+    // }
+  }
+  Future<void> getSimilarMovies(String showID) async {
+    // try {
+      String url =
+          'https://api.themoviedb.org/3/movie/${showID}/similar?api_key=${API_KEY}&language=en-US&page=1';
+      print(url);
+      Response httpResponse = await get(Uri.parse(url));
+      var decodeJson = jsonDecode(httpResponse.body);
+      similarMovies = SimilarMovies.fromJson(decodeJson);
       return;
     // } catch (e) {
     //   print(e.toString());

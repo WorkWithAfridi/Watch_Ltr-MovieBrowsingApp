@@ -6,6 +6,7 @@ import 'package:watch_ltr/functions/getImageUrl.dart';
 import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
 import 'package:watch_ltr/screens/widgets/getRecommendedMovies.dart';
+import 'package:watch_ltr/screens/widgets/getSimilarMovies.dart';
 
 import '../constants/customColors.dart';
 import '../constants/customTextStyle.dart';
@@ -34,6 +35,7 @@ class _ShowDetailsState extends State<ShowDetails> {
     await showDetailsProvider.getShowDetails(widget.showId);
     await showDetailsProvider.getRecommendedMovies(widget.showId);
     await showDetailsProvider.getReviews(widget.showId);
+    await showDetailsProvider.getSimilarMovies(widget.showId);
 
     showDetailsProvider.isLoading = false;
     // await Future.delayed(
@@ -187,7 +189,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 15),
                                       child: Text(
-                                        '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
+                                          provider.showDetails.releaseDate.toString().length <4? provider.showDetails.releaseDate.toString() : '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
@@ -216,6 +218,9 @@ class _ShowDetailsState extends State<ShowDetails> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(
+                            width: 5,
+                          ),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
@@ -223,7 +228,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                             itemCount: provider.showDetails.genres!.length,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
+                                padding: const EdgeInsets.only(left: 10.0),
                                 child: Container(
                                   width: 100,
                                   padding: EdgeInsets.symmetric(horizontal: 10),
@@ -244,6 +249,9 @@ class _ShowDetailsState extends State<ShowDetails> {
                                 ),
                               );
                             },
+                          ),
+                          SizedBox(
+                            width: 15,
                           ),
                         ],
                       ),
@@ -413,27 +421,36 @@ class _ShowDetailsState extends State<ShowDetails> {
                                     SizedBox(
                                       height: 2,
                                     ),
-                                    Container(
-                                      height: 120,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: BouncingScrollPhysics(),
-                                        itemCount: provider.showDetails
-                                            .productionCompanies!.length
-                                            .toInt(),
-                                        itemBuilder: (context, index) {
-                                          return Container(
-                                              height: 20,
-                                              child: Text(
-                                                '- ${provider.showDetails.productionCompanies![index].name.toString()}',
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: defaultTS,
-                                              ));
-                                        },
+                                  ],
+                                ),
+                                Expanded(
+                                  child:  Container(
+                                    child: SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Column(
+                                        children: [
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            physics: NeverScrollableScrollPhysics(),
+                                            itemCount: provider.showDetails
+                                                .productionCompanies!.length
+                                                .toInt(),
+                                            itemBuilder: (context, index) {
+                                              return Container(
+                                                  height: 20,
+                                                  child: Text(
+                                                    '- ${provider.showDetails.productionCompanies![index].name.toString()}',
+                                                    maxLines: 1,
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                    style: defaultTS,
+                                                  ));
+                                            },
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -563,7 +580,9 @@ class _ShowDetailsState extends State<ShowDetails> {
                             Container(
                               height: provider.reviews.results!.length > 4
                                   ? 80 * 4
-                                  : 80 *provider.reviews.results!.length.toDouble(),
+                                  : 80 *
+                                      provider.reviews.results!.length
+                                          .toDouble(),
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                 shrinkWrap: true,
@@ -638,6 +657,29 @@ class _ShowDetailsState extends State<ShowDetails> {
                           ],
                         )
                       : Container(),
+                  provider.similarMovies.results!.length == 0
+                      ? Container()
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GetSimilarMovies(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Divider(
+                                height: 1,
+                                color: white.withOpacity(.1),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                   provider.recommendedMovies.results!.length == 0
                       ? Container()
                       : Column(
@@ -660,7 +702,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                               height: 20,
                             ),
                           ],
-                        )
+                        ),
                 ],
               ),
             ),

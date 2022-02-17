@@ -3,8 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:watch_ltr/constants/customColors.dart';
 import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
+import 'package:watch_ltr/provider/search_provider.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
-import 'package:watch_ltr/screens/home.dart';
+import 'package:watch_ltr/screens/homeTab.dart';
 import 'package:watch_ltr/screens/onBoarding.dart';
 import 'package:watch_ltr/screens/signUp.dart';
 import 'package:watch_ltr/screens/splash_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
         ChangeNotifierProvider(create: (context) => ShowDetailsProvider()),
+        ChangeNotifierProvider(create: (context) => SearchProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
           OpenWebView.route: (context) => OpenWebView(),
           SignUp.route: (context) => SignUp(),
           SignIn.route: (context) => SignIn(),
-          Home.route: (context) => Home(),
+          HomeTab.route: (context) => HomeTab(),
         },
       ),
     );

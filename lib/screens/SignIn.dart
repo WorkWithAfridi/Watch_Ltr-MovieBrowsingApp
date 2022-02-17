@@ -4,7 +4,7 @@ import 'package:watch_ltr/screens/widgets/customTextField.dart';
 
 import '../constants/customColors.dart';
 import '../constants/customTextStyle.dart';
-import 'home.dart';
+import 'homeTab.dart';
 
 class SignIn extends StatefulWidget {
   static const route = '/OnBoarding/SignIn';
@@ -122,7 +122,7 @@ class _SignInState extends State<SignIn> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushReplacementNamed(Home.route);
+                                    .pushReplacementNamed(HomeTab.route);
                               },
                               child: Card(
                                 color: Colors.transparent,
