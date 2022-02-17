@@ -19,13 +19,17 @@ class AuthMethods {
   Future<String> signUpUser(
       {required String userEmail,
       required String password,
-      required String userName}) async {
+      required String userName,
+      required BuildContext context}) async {
     String res = 'An error occurred.';
     try {
       if (userEmail.isNotEmpty || password.isNotEmpty || userName.isNotEmpty) {
         UserCredential userCredential =
             await _auth.createUserWithEmailAndPassword(
                 email: userEmail, password: password);
+        userCredential = await _auth.signInWithEmailAndPassword(
+            email: userEmail, password: password);
+
         UserModel user = UserModel.name(
           userEmail: userEmail,
           userName: userName,
@@ -38,6 +42,11 @@ class AuthMethods {
             .doc(userCredential.user!.uid)
             .set(user.toJson());
         res = 'User created successfully';
+
+        UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+        await userProvider.refreshUser();
+        print(userProvider.getUserModel.userName);
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == 'invalid-email') res = 'Wrong Email format';

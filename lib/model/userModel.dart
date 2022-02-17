@@ -29,8 +29,8 @@ class UserModel {
       userEmail: snapshot['userEmail'],
       userName: snapshot['userName'],
       userId: snapshot['userId'],
-      watchLaterList: snapshot['watchLaterList'],
-      watchedList: snapshot['watchedList'],
+      watchLaterList: snapshot['watchLaterList'].cast<String>(),
+      watchedList: snapshot['watchedList'].cast<String>(),
     );
   }
 }

@@ -72,12 +72,18 @@ class _SignInState extends State<SignIn> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 55),
                         child: Text(
                           "Your one stop solution for all your media queries.",
                           textAlign: TextAlign.center,
-                          style: defaultTS.copyWith(fontWeight: FontWeight.w900, fontSize: 11),
+                          style: AuthorTS.copyWith(
+                              color: black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
                         ),
                       ),
                       SizedBox(
@@ -121,8 +127,51 @@ class _SignInState extends State<SignIn> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.of(context)
-                                    .pushReplacementNamed(HomeTab.route);
+
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                if (emailTextEditingController
+                                    .text.isNotEmpty ||
+                                    passwordTextEditingController
+                                        .text.isNotEmpty ||
+                                    userNameTextEditingController
+                                        .text.isNotEmpty) {
+                                  String res = await AuthMethods().signUpUser(
+                                    userEmail: emailTextEditingController.text,
+                                    password:
+                                    passwordTextEditingController.text,
+                                    userName:
+                                    userNameTextEditingController.text,
+                                    context: context,
+                                  );
+
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        res.toString(),
+                                        style: defaultTS.copyWith(color: white),
+                                      ),
+                                      backgroundColor: black,
+                                    ),
+                                  );
+                                  Navigator.of(context)
+                                      .pushNamed(HomeTab.route);
+                                } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Something went wrong....'),
+                                      backgroundColor: red,
+                                    ),
+                                  );
+                                }
                               },
                               child: Card(
                                 color: Colors.transparent,

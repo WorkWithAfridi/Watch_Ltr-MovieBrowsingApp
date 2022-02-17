@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:watch_ltr/resources/auth_methods.dart';
+import 'package:watch_ltr/screens/homeTab.dart';
 import 'package:watch_ltr/screens/widgets/customTextField.dart';
 
 import '../constants/customColors.dart';
@@ -18,6 +19,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController userNameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,13 +74,18 @@ class _SignUpState extends State<SignUp> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 55),
                         child: Text(
                           "Your one stop solution for all your media queries.",
                           textAlign: TextAlign.center,
-                          style: defaultTS.copyWith(
-                              fontWeight: FontWeight.w900, fontSize: 11),
+                          style: AuthorTS.copyWith(
+                              color: black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20),
                         ),
                       ),
                       SizedBox(
@@ -137,6 +144,9 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
                                 if (emailTextEditingController
                                         .text.isNotEmpty ||
                                     passwordTextEditingController
@@ -144,20 +154,33 @@ class _SignUpState extends State<SignUp> {
                                     userNameTextEditingController
                                         .text.isNotEmpty) {
                                   String res = await AuthMethods().signUpUser(
-                                      userEmail:
-                                          emailTextEditingController.text,
-                                      password:
-                                          passwordTextEditingController.text,
-                                      userName:
-                                          userNameTextEditingController.text);
+                                    userEmail: emailTextEditingController.text,
+                                    password:
+                                        passwordTextEditingController.text,
+                                    userName:
+                                        userNameTextEditingController.text,
+                                    context: context,
+                                  );
+
+                                  setState(() {
+                                    isLoading = false;
+                                  });
 
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text(res.toString()),
-                                      backgroundColor: red,
+                                      content: Text(
+                                        res.toString(),
+                                        style: defaultTS.copyWith(color: white),
+                                      ),
+                                      backgroundColor: black,
                                     ),
                                   );
+                                  Navigator.of(context)
+                                      .pushNamed(HomeTab.route);
                                 } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Fields cannot be empty!'),
@@ -166,23 +189,37 @@ class _SignUpState extends State<SignUp> {
                                   );
                                 }
                               },
-                              child: Card(
-                                color: Colors.transparent,
-                                elevation: 15,
-                                child: Container(
-                                  height: 50,
-                                  width: MediaQuery.of(context).size.width / 2,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: black.withOpacity(.9),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'SIGN UP',
-                                    style: TitleTS,
-                                  ),
-                                ),
-                              ),
+                              child: isLoading
+                                  ? Container(
+                                      height: 50,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: black,
+                                        ),
+                                      ),
+                                    )
+                                  : Card(
+                                      color: Colors.transparent,
+                                      elevation: 15,
+                                      child: Container(
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: black.withOpacity(.9),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'SIGN UP',
+                                          style: TitleTS,
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
