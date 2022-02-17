@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:watch_ltr/resources/auth_methods.dart';
 import 'package:watch_ltr/screens/widgets/customTextField.dart';
 
 import '../constants/customColors.dart';
@@ -76,7 +77,8 @@ class _SignUpState extends State<SignUp> {
                         child: Text(
                           "Your one stop solution for all your media queries.",
                           textAlign: TextAlign.center,
-                          style: defaultTS.copyWith(fontWeight: FontWeight.w900, fontSize: 11),
+                          style: defaultTS.copyWith(
+                              fontWeight: FontWeight.w900, fontSize: 11),
                         ),
                       ),
                       SizedBox(
@@ -134,8 +136,35 @@ class _SignUpState extends State<SignUp> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(SignUp.route);
+                              onTap: () async {
+                                if (emailTextEditingController
+                                        .text.isNotEmpty ||
+                                    passwordTextEditingController
+                                        .text.isNotEmpty ||
+                                    userNameTextEditingController
+                                        .text.isNotEmpty) {
+                                  String res = await AuthMethods().signUpUser(
+                                      userEmail:
+                                          emailTextEditingController.text,
+                                      password:
+                                          passwordTextEditingController.text,
+                                      userName:
+                                          userNameTextEditingController.text);
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(res.toString()),
+                                      backgroundColor: red,
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Fields cannot be empty!'),
+                                      backgroundColor: red,
+                                    ),
+                                  );
+                                }
                               },
                               child: Card(
                                 color: Colors.transparent,

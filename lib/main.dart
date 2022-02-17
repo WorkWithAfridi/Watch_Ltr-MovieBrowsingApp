@@ -5,6 +5,7 @@ import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/provider/search_provider.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
+import 'package:watch_ltr/provider/userProvider.dart';
 import 'package:watch_ltr/screens/homeTab.dart';
 import 'package:watch_ltr/screens/onBoarding.dart';
 import 'package:watch_ltr/screens/signUp.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => HomeProvider()),
         ChangeNotifierProvider(create: (context) => ShowDetailsProvider()),
         ChangeNotifierProvider(create: (context) => SearchProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

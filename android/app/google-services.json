@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "386252423610",
+    "project_id": "watchltr-186cd",
+    "storage_bucket": "watchltr-186cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386252423610:android:6b38024d9f2df221329d83",
+        "android_client_info": {
+          "package_name": "com.workwithafridi.watch_ltr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386252423610-2eb089rf34ems1accmfi58rmov1u17f2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALpc3QJwmWyYSwjg6jCPm7RB95O6ci4zU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386252423610-2eb089rf34ems1accmfi58rmov1u17f2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

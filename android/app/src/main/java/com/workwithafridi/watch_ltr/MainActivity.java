@@ -1,4 +1,4 @@
-package com.workwithafridi.watchltr.watch_ltr;
+package com.workwithafridi.watch_ltr;
 
 import io.flutter.embedding.android.FlutterActivity;
 
