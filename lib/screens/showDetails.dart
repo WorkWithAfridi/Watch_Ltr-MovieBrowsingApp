@@ -225,7 +225,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.horizontal,
-                            itemCount: provider.showDetails.genres!.length ?? 0,
+                            itemCount: provider.showDetails.genres!.length,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.only(left: 10.0),

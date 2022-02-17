@@ -42,6 +42,11 @@ dependencies:
   date_format: any
   lottie: any
   webview_flutter: any
+  firebase_core: any
+  cloud_firestore: any
+  firebase_auth: any
+  firebase_storage: any
+  uuid: any
 
 dev_dependencies:
   flutter_test:
