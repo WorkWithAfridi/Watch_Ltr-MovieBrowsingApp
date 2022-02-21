@@ -69,10 +69,29 @@ class _HomeTabState extends State<HomeTab> {
                           ),
                         ],
                       )
-                    : Container(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        child: MoviesPage()),
+                    : Consumer<HomeProvider>(
+                      builder: (context, provider, childProperty) {
+                        return Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            child: PageView(
+                              controller: provider.pageController,
+                              children: [
+                                Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.red,
+                                ),
+                                MoviesPage(),
+                                Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.blue,
+                                ),
+                              ],
+                            ));
+                      }
+                    ),
                 Positioned(
                   top: 0,
                   left: 0,

@@ -48,7 +48,9 @@ class _MoviesPageState extends State<MoviesPage> {
               ),
             ),
             GetTrendingMovies(),
-            SizedBox(height: 15,),
+            SizedBox(
+              height: 15,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Divider(
@@ -70,7 +72,6 @@ class _MoviesPageState extends State<MoviesPage> {
       ),
     );
   }
-
 
   Widget getBannerForHome(BuildContext context) {
     return Consumer<HomeProvider>(builder: (context, provider, childproperty) {
@@ -185,50 +186,70 @@ class _MoviesPageState extends State<MoviesPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    filterForHome = 'tv_shows';
-                  });
-                },
-                child: Text(
-                  'TV Shows',
-                  style: TitleTS.copyWith(
-                      fontSize: 18,
-                      wordSpacing: 1,
-                      letterSpacing: 1,
-                      color: filterForHome == 'tv_shows' ? red : Colors.white),
-                ),
+              Consumer<HomeProvider>(
+                  builder: (context, provider, childProperty) {
+                return GestureDetector(
+                  onTap: () {
+                    provider.pageController.animateToPage(0,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.linearToEaseOut);
+                  },
+                  child: Text(
+                    'TV Shows',
+                    style: TitleTS.copyWith(
+                        fontSize: 18,
+                        wordSpacing: 1,
+                        letterSpacing: 1,
+                        color:
+                            filterForHome == 'tv_shows' ? red : Colors.white),
+                  ),
+                );
+              }),
+              Consumer<HomeProvider>(
+                builder: (context, provider, childProperty) {
+                  return GestureDetector(
+                    onTap: () {
+                      provider.pageController.animateToPage(1,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.linearToEaseOut);
+                    },
+                    child: Text(
+                      'Movies',
+                      style: TitleTS.copyWith(
+                          fontSize: 18,
+                          wordSpacing: 1,
+                          letterSpacing: 1,
+                          color: filterForHome == 'movies' ? red : Colors.white),
+                    ),
+                  );
+                }
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    filterForHome = 'movies';
-                  });
-                },
-                child: Text(
-                  'Movies',
-                  style: TitleTS.copyWith(
-                      fontSize: 18,
-                      wordSpacing: 1,
-                      letterSpacing: 1,
-                      color: filterForHome == 'movies' ? red : Colors.white),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    filterForHome = 'my_list';
-                  });
-                },
-                child: Text(
-                  'My List',
-                  style: TitleTS.copyWith(
-                      fontSize: 18,
-                      wordSpacing: 1,
-                      letterSpacing: 1,
-                      color: filterForHome == 'my_list' ? red : Colors.white),
-                ),
+              Consumer<HomeProvider>(
+                builder: (context, provider, childProperty) {
+                  return GestureDetector(
+                    onTap: () {
+                      provider.pageController.animateToPage(2,
+                          duration: Duration(seconds: 2),
+                          curve: Curves.linearToEaseOut);
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'Watch list',
+                          style: TitleTS.copyWith(
+                              fontSize: 18,
+                              wordSpacing: 1,
+                              letterSpacing: 1,
+                              color:
+                                  filterForHome == 'my_list' ? red : Colors.white),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                      ],
+                    ),
+                  );
+                }
               ),
             ],
           ),

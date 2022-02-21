@@ -9,6 +9,8 @@ import 'package:watch_ltr/model/trending_now_movies.dart';
 import 'package:watch_ltr/model/upcoming_movies.dart';
 
 class HomeProvider extends ChangeNotifier {
+  int pageNo=0;
+  PageController pageController = PageController(initialPage: 1);
   late TrendingNowMovies trendingMovies;
   late PlayingNowMovies playingNowMovies;
   late UpcomingMovies upcomingMovies;
