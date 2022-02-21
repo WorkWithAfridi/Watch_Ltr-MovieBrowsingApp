@@ -70,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
                         ],
                       )
                     : Consumer<HomeProvider>(
-                      builder: (context, provider, childProperty) {
+                        builder: (context, provider, childProperty) {
                         return Container(
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
@@ -90,8 +90,7 @@ class _HomeTabState extends State<HomeTab> {
                                 ),
                               ],
                             ));
-                      }
-                    ),
+                      }),
                 Positioned(
                   top: 0,
                   left: 0,
@@ -161,7 +160,8 @@ class _HomeTabState extends State<HomeTab> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text('Sign Out', style: TitleTS)
+                      Text('Sign Out',
+                          style: TitleTS.copyWith(fontWeight: FontWeight.w500))
                     ],
                   ),
                 ),
@@ -174,21 +174,36 @@ class _HomeTabState extends State<HomeTab> {
         ),
       ),
       backgroundColor: black,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: PageView.builder(
-          itemCount: 4,
-          physics: NeverScrollableScrollPhysics(),
-          onPageChanged: (value) {
-            setState(() {
-              currentIndex = value;
-            });
-          },
-          itemBuilder: (context, index) {
-            return Screens[currentIndex];
-          },
-        ),
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/background_img_for_homepage.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox.expand(
+            child: Container(
+              color: black.withOpacity(.96),
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: PageView.builder(
+              itemCount: 4,
+              physics: NeverScrollableScrollPhysics(),
+              onPageChanged: (value) {
+                setState(() {
+                  currentIndex = value;
+                });
+              },
+              itemBuilder: (context, index) {
+                return Screens[currentIndex];
+              },
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: getBottomNavigationBar(),
     );

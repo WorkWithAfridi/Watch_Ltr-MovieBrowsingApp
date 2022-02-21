@@ -60,7 +60,7 @@ class GetRecommendedMovies extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ShowDetails(
+                          builder: (context) => ShowDetailsPage(
                             showId: provider
                                 .recommendedMovies.results![index].id
                                 .toString(),

@@ -63,7 +63,7 @@ class GetPopularMovies extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ShowDetails(
+                          builder: (context) => ShowDetailsPage(
                             showId: provider.playingNowMovies.results![index].id
                                 .toString(),
                           ),

@@ -41,7 +41,7 @@ class AuthMethods {
             .collection('users')
             .doc(userCredential.user!.uid)
             .set(user.toJson());
-        res = 'User created successfully';
+        res = 'success';
 
         UserProvider userProvider =
         Provider.of<UserProvider>(context, listen: false);

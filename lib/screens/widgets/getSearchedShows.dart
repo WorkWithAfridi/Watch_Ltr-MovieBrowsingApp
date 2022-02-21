@@ -59,7 +59,7 @@ class GetSearchedShows extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ShowDetails(
+                          builder: (context) => ShowDetailsPage(
                             showId: provider.search.results![index].id
                                 .toString(),
                           ),

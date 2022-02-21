@@ -73,7 +73,7 @@ class OnBoarding extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 25),
                                 child: Text(
                                   "Bookmark anything, anywhere.",
-                                  style: defaultTS,
+                                  style: AuthorTS.copyWith(color: black),
                                 ),
                               ),
                               SizedBox(

@@ -58,7 +58,7 @@ class GetTrendingMovies extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ShowDetails(
+                          builder: (context) => ShowDetailsPage(
                             showId: provider.trendingMovies.results![index].id
                                 .toString(),
                           ),
@@ -97,9 +97,6 @@ class GetTrendingMovies extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
                                     Text(
                                       provider
                                           .trendingMovies.results![index].title

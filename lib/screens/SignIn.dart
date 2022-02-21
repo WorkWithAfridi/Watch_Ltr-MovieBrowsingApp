@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+import 'package:watch_ltr/provider/userProvider.dart';
 import 'package:watch_ltr/screens/widgets/customTextField.dart';
 
 import '../constants/customColors.dart';
 import '../constants/customTextStyle.dart';
+import '../resources/auth_methods.dart';
 import 'homeTab.dart';
 
 class SignIn extends StatefulWidget {
@@ -18,6 +21,8 @@ class _SignInState extends State<SignIn> {
   TextEditingController userNameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,75 +131,89 @@ class _SignInState extends State<SignIn> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                //
-                                // setState(() {
-                                //   isLoading = true;
-                                // });
-                                // if (emailTextEditingController
-                                //     .text.isNotEmpty ||
-                                //     passwordTextEditingController
-                                //         .text.isNotEmpty ||
-                                //     userNameTextEditingController
-                                //         .text.isNotEmpty) {
-                                //   String res = await AuthMethods().signUpUser(
-                                //     userEmail: emailTextEditingController.text,
-                                //     password:
-                                //     passwordTextEditingController.text,
-                                //     userName:
-                                //     userNameTextEditingController.text,
-                                //     context: context,
-                                //   );
-                                //
-                                //   setState(() {
-                                //     isLoading = false;
-                                //   });
-                                //
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //     SnackBar(
-                                //       content: Text(
-                                //         res.toString(),
-                                //         style: defaultTS.copyWith(color: white),
-                                //       ),
-                                //       backgroundColor: black,
-                                //     ),
-                                //   );
-                                //   Navigator.of(context)
-                                //       .pushNamed(HomeTab.route);
-                                // } else {
-                                //   setState(() {
-                                //     isLoading = false;
-                                //   });
-                                //   ScaffoldMessenger.of(context).showSnackBar(
-                                //     SnackBar(
-                                //       content: Text('Something went wrong....'),
-                                //       backgroundColor: red,
-                                //     ),
-                                //   );
-                                // }
+                              onTap: () async {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                if (emailTextEditingController
+                                        .text.isNotEmpty ||
+                                    passwordTextEditingController
+                                        .text.isNotEmpty ||
+                                    userNameTextEditingController
+                                        .text.isNotEmpty) {
+                                  String res = await AuthMethods().logInUser(
+                                    userEmail: emailTextEditingController.text,
+                                    password:
+                                        passwordTextEditingController.text,
+                                    context: context,
+                                  );
+                                  UserProvider userProvider =
+                                      Provider.of<UserProvider>(context,
+                                          listen: false);
+                                  await userProvider.refreshUser();
 
-                                
+                                  setState(() {
+                                    isLoading = false;
+                                  });
 
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //   SnackBar(
+                                  //     content: Text(
+                                  //       res.toString(),
+                                  //       style: defaultTS.copyWith(color: white),
+                                  //     ),
+                                  //     backgroundColor: black,
+                                  //   ),
+                                  // );
                                   Navigator.of(context)
                                       .pushNamed(HomeTab.route);
+                                } else {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          'Please input a valid username and password.'),
+                                      backgroundColor: black,
+                                    ),
+                                  );
+                                }
+
+                                // Navigator.of(context)
+                                //     .pushNamed(HomeTab.route);
                               },
-                              child: Card(
-                                color: Colors.transparent,
-                                elevation: 15,
-                                child: Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: black.withOpacity(.9),
-                                  ),
-                                  width: MediaQuery.of(context).size.width / 2,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'SIGN IN',
-                                    style: TitleTS,
-                                  ),
-                                ),
-                              ),
+                              child: isLoading
+                                  ? Container(
+                                      height: 50,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: black,
+                                        ),
+                                      ),
+                                    )
+                                  : Card(
+                                      color: Colors.transparent,
+                                      elevation: 15,
+                                      child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: black.withOpacity(.9),
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          'SIGN IN',
+                                          style: TitleTS,
+                                        ),
+                                      ),
+                                    ),
                             ),
                           ],
                         ),

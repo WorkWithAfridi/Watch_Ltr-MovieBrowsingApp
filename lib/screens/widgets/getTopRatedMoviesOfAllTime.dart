@@ -59,7 +59,7 @@ class GetTopRatedMovies extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ShowDetails(
+                          builder: (context) => ShowDetailsPage(
                             showId: provider
                                 .topRatedMoviesOfAllTime.results![index].id
                                 .toString(),

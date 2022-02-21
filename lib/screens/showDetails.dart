@@ -11,15 +11,15 @@ import 'package:watch_ltr/screens/widgets/getSimilarMovies.dart';
 import '../constants/customColors.dart';
 import '../constants/customTextStyle.dart';
 
-class ShowDetails extends StatefulWidget {
+class ShowDetailsPage extends StatefulWidget {
   String showId;
-  ShowDetails({Key? key, required this.showId}) : super(key: key);
+  ShowDetailsPage({Key? key, required this.showId}) : super(key: key);
 
   @override
-  _ShowDetailsState createState() => _ShowDetailsState();
+  _ShowDetailsPageState createState() => _ShowDetailsPageState();
 }
 
-class _ShowDetailsState extends State<ShowDetails> {
+class _ShowDetailsPageState extends State<ShowDetailsPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -189,7 +189,13 @@ class _ShowDetailsState extends State<ShowDetails> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 15),
                                       child: Text(
-                                          provider.showDetails.releaseDate.toString().length <4? provider.showDetails.releaseDate.toString() : '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
+                                        provider.showDetails.releaseDate
+                                                    .toString()
+                                                    .length <
+                                                4
+                                            ? provider.showDetails.releaseDate
+                                                .toString()
+                                            : '( ${provider.showDetails.releaseDate.toString().substring(0, 4)} )',
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
@@ -424,14 +430,15 @@ class _ShowDetailsState extends State<ShowDetails> {
                                   ],
                                 ),
                                 Expanded(
-                                  child:  Container(
+                                  child: Container(
                                     child: SingleChildScrollView(
                                       physics: BouncingScrollPhysics(),
                                       child: Column(
                                         children: [
                                           ListView.builder(
                                             shrinkWrap: true,
-                                            physics: NeverScrollableScrollPhysics(),
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
                                             itemCount: provider.showDetails
                                                 .productionCompanies!.length
                                                 .toInt(),
@@ -442,7 +449,7 @@ class _ShowDetailsState extends State<ShowDetails> {
                                                     '- ${provider.showDetails.productionCompanies![index].name.toString()}',
                                                     maxLines: 1,
                                                     overflow:
-                                                    TextOverflow.ellipsis,
+                                                        TextOverflow.ellipsis,
                                                     style: defaultTS,
                                                   ));
                                             },
@@ -606,7 +613,9 @@ class _ShowDetailsState extends State<ShowDetails> {
                                           provider
                                               .reviews.results![index].author
                                               .toString(),
-                                          style: TitleTS.copyWith(fontSize: 20),
+                                          style: TitleTS.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20),
                                         ),
                                         Text(
                                           provider
@@ -657,29 +666,43 @@ class _ShowDetailsState extends State<ShowDetails> {
                           ],
                         )
                       : Container(),
-                  provider.similarMovies.results!.length == 0
-                      ? Container()
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GetSimilarMovies(),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Divider(
-                                height: 1,
-                                color: white.withOpacity(.1),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: GestureDetector(
+                      onTap: () async {
+                        // Navigator.of(context).pushNamed(OpenWebView.route,
+                        //     arguments: {
+                        //       'Url': provider.showDetails.homepage.toString()
+                        //     });
+                      },
+                      child: Container(
+                        height: 30,
+                        width: double.infinity,
+                        color: red,
+                        alignment: Alignment.center,
+                        child: Text(
+                          'Add to watch later',
+                          style: TitleTS,
                         ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Divider(
+                      height: 1,
+                      color: white.withOpacity(.1),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   provider.recommendedMovies.results!.length == 0
                       ? Container()
                       : Column(
@@ -699,10 +722,34 @@ class _ShowDetailsState extends State<ShowDetails> {
                               ),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
                           ],
                         ),
+
+                  provider.similarMovies.results!.length == 0
+                      ? Container()
+                      : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GetSimilarMovies(),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 15),
+                        child: Divider(
+                          height: 1,
+                          color: white.withOpacity(.1),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

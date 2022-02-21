@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
+import 'package:watch_ltr/model/show_details.dart';
+import 'package:watch_ltr/screens/showDetails.dart';
 import 'package:watch_ltr/screens/widgets/getPopularMovies.dart';
 import 'package:watch_ltr/screens/widgets/getTopRatedMoviesOfAllTime.dart';
 import 'package:watch_ltr/screens/widgets/getTrendingMovies.dart';
@@ -32,13 +34,13 @@ class _MoviesPageState extends State<MoviesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getBannerForHome(context),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Divider(
-                height: 1,
-                color: white.withOpacity(.1),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 15),
+            //   child: Divider(
+            //     height: 1,
+            //     color: white.withOpacity(.1),
+            //   ),
+            // ),
             GetPopularMovies(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -75,101 +77,112 @@ class _MoviesPageState extends State<MoviesPage> {
 
   Widget getBannerForHome(BuildContext context) {
     return Consumer<HomeProvider>(builder: (context, provider, childproperty) {
-      return Container(
-        height: MediaQuery.of(context).size.height * .65,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * .65,
-              width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                getImageUrl(
-                  provider.trendingMovies.results![0].posterPath.toString(),
-                ),
-                fit: BoxFit.cover,
+      return GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ShowDetailsPage(
+                showId: provider.trendingMovies.results![0].id.toString(),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * .65,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                gradient: LinearGradient(
-                  colors: [
-                    black.withOpacity(.8),
-                    black.withOpacity(.25),
-                    black.withOpacity(.0),
-                    black.withOpacity(.0),
-                  ],
-                  begin: Alignment.centerLeft, //begin of the gradient color
-                  end: Alignment.centerRight, //end of the gradient color
-                  // stops: [0, 0.2, 0.5, 0.8],
+          );
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * .85,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * .85,
+                width: MediaQuery.of(context).size.width,
+                child: Image.network(
+                  getImageUrl(
+                    provider.trendingMovies.results![0].posterPath.toString(),
+                  ),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * .65,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                gradient: LinearGradient(
-                  colors: [
-                    black.withOpacity(0),
-                    black.withOpacity(.6),
-                    black.withOpacity(.8),
-                    black.withOpacity(1),
-                  ],
-                  begin: Alignment.center, //begin of the gradient color
-                  end: Alignment.bottomCenter, //end of the gradient color
-                  // stops: [0, 0.2, 0.5, 0.8],
-                ),
-              ),
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .65,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 75, right: 15),
-                        child: FittedBox(
-                          child: Text(
-                            provider.trendingMovies.results![0].title
-                                .toString(),
-                            style: TitleTS,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 75, right: 15),
-                        child: Text(
-                          '      ${provider.trendingMovies.results![0].overview.toString()}',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          textAlign: TextAlign.end,
-                          style: defaultTS,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      )
+              Container(
+                height: MediaQuery.of(context).size.height * .85,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  gradient: LinearGradient(
+                    colors: [
+                      black.withOpacity(.8),
+                      black.withOpacity(.25),
+                      black.withOpacity(.0),
+                      black.withOpacity(.0),
                     ],
+                    begin: Alignment.centerLeft, //begin of the gradient color
+                    end: Alignment.centerRight, //end of the gradient color
+                    // stops: [0, 0.2, 0.5, 0.8],
                   ),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * .65,
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.centerLeft,
-                  child: getFilterForHome(context),
-                )
-              ],
-            ),
-          ],
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * .85,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  gradient: LinearGradient(
+                    colors: [
+                      black.withOpacity(0),
+                      black.withOpacity(.6),
+                      black.withOpacity(.8),
+                      black.withOpacity(1),
+                    ],
+                    begin: Alignment.center, //begin of the gradient color
+                    end: Alignment.bottomCenter, //end of the gradient color
+                    // stops: [0, 0.2, 0.5, 0.8],
+                  ),
+                ),
+              ),
+              Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * .85,
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 75, right: 15),
+                          child: FittedBox(
+                            child: Text(
+                              provider.trendingMovies.results![0].title
+                                  .toString(),
+                              style: TitleTS,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 75, right: 15),
+                          child: Text(
+                            '      ${provider.trendingMovies.results![0].overview.toString()}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            textAlign: TextAlign.end,
+                            style: defaultTS,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * .85,
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.centerLeft,
+                    child: getFilterForHome(context),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -206,51 +219,50 @@ class _MoviesPageState extends State<MoviesPage> {
                 );
               }),
               Consumer<HomeProvider>(
-                builder: (context, provider, childProperty) {
-                  return GestureDetector(
-                    onTap: () {
-                      provider.pageController.animateToPage(1,
-                          duration: Duration(seconds: 1),
-                          curve: Curves.linearToEaseOut);
-                    },
-                    child: Text(
-                      'Movies',
-                      style: TitleTS.copyWith(
-                          fontSize: 18,
-                          wordSpacing: 1,
-                          letterSpacing: 1,
-                          color: filterForHome == 'movies' ? red : Colors.white),
-                    ),
-                  );
-                }
-              ),
+                  builder: (context, provider, childProperty) {
+                return GestureDetector(
+                  onTap: () {
+                    provider.pageController.animateToPage(1,
+                        duration: Duration(seconds: 1),
+                        curve: Curves.linearToEaseOut);
+                  },
+                  child: Text(
+                    'Movies',
+                    style: TitleTS.copyWith(
+                        fontSize: 18,
+                        wordSpacing: 1,
+                        letterSpacing: 1,
+                        color: filterForHome == 'movies' ? red : Colors.white),
+                  ),
+                );
+              }),
               Consumer<HomeProvider>(
-                builder: (context, provider, childProperty) {
-                  return GestureDetector(
-                    onTap: () {
-                      provider.pageController.animateToPage(2,
-                          duration: Duration(seconds: 2),
-                          curve: Curves.linearToEaseOut);
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          'Watch list',
-                          style: TitleTS.copyWith(
-                              fontSize: 18,
-                              wordSpacing: 1,
-                              letterSpacing: 1,
-                              color:
-                                  filterForHome == 'my_list' ? red : Colors.white),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              ),
+                  builder: (context, provider, childProperty) {
+                return GestureDetector(
+                  onTap: () {
+                    provider.pageController.animateToPage(2,
+                        duration: Duration(seconds: 2),
+                        curve: Curves.linearToEaseOut);
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        'Watch list',
+                        style: TitleTS.copyWith(
+                            fontSize: 18,
+                            wordSpacing: 1,
+                            letterSpacing: 1,
+                            color: filterForHome == 'my_list'
+                                ? red
+                                : Colors.white),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         ),
