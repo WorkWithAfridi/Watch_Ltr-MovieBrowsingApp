@@ -15,8 +15,8 @@ import 'package:watch_ltr/screens/splash_screen.dart';
 import 'screens/SignIn.dart';
 
 void main()async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

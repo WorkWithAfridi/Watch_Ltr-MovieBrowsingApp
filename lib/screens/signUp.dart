@@ -147,47 +147,49 @@ class _SignUpState extends State<SignUp> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                if (emailTextEditingController
-                                        .text.isNotEmpty ||
-                                    passwordTextEditingController
-                                        .text.isNotEmpty ||
-                                    userNameTextEditingController
-                                        .text.isNotEmpty) {
-                                  String res = await AuthMethods().signUpUser(
-                                    userEmail: emailTextEditingController.text,
-                                    password:
-                                        passwordTextEditingController.text,
-                                    userName:
-                                        userNameTextEditingController.text,
-                                    context: context,
-                                  );
+                                // if (emailTextEditingController
+                                //         .text.isNotEmpty ||
+                                //     passwordTextEditingController
+                                //         .text.isNotEmpty ||
+                                //     userNameTextEditingController
+                                //         .text.isNotEmpty) {
+                                //   String res = await AuthMethods().signUpUser(
+                                //     userEmail: emailTextEditingController.text,
+                                //     password:
+                                //         passwordTextEditingController.text,
+                                //     userName:
+                                //         userNameTextEditingController.text,
+                                //     context: context,
+                                //   );
+                                //
+                                //   setState(() {
+                                //     isLoading = false;
+                                //   });
+                                //
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //       content: Text(
+                                //         res.toString(),
+                                //         style: defaultTS.copyWith(color: white),
+                                //       ),
+                                //       backgroundColor: black,
+                                //     ),
+                                //   );
+                                //   Navigator.of(context)
+                                //       .pushNamed(HomeTab.route);
+                                // } else {
+                                //   setState(() {
+                                //     isLoading = false;
+                                //   });
+                                //   ScaffoldMessenger.of(context).showSnackBar(
+                                //     SnackBar(
+                                //       content: Text('Fields cannot be empty!'),
+                                //       backgroundColor: red,
+                                //     ),
+                                //   );
+                                // }
 
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        res.toString(),
-                                        style: defaultTS.copyWith(color: white),
-                                      ),
-                                      backgroundColor: black,
-                                    ),
-                                  );
-                                  Navigator.of(context)
-                                      .pushNamed(HomeTab.route);
-                                } else {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Fields cannot be empty!'),
-                                      backgroundColor: red,
-                                    ),
-                                  );
-                                }
+                                Navigator.of(context).pushNamed(HomeTab.route);
                               },
                               child: isLoading
                                   ? Container(
