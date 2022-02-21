@@ -136,6 +136,7 @@ class _HomeTabState extends State<HomeTab> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Container(
@@ -151,6 +152,7 @@ class _HomeTabState extends State<HomeTab> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   height: 45,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         FontAwesomeIcons.signOutAlt,
@@ -160,8 +162,13 @@ class _HomeTabState extends State<HomeTab> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text('Sign Out',
-                          style: TitleTS.copyWith(fontWeight: FontWeight.w500))
+                      Text(
+                        'Sign Out',
+                        style: TitleTS.copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
                     ],
                   ),
                 ),

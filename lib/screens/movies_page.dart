@@ -161,8 +161,8 @@ class _MoviesPageState extends State<MoviesPage> {
                           padding: const EdgeInsets.only(left: 75, right: 15),
                           child: Text(
                             '      ${provider.trendingMovies.results![0].overview.toString()}',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                            // overflow: TextOverflow.ellipsis,
+                            // maxLines: 4,
                             textAlign: TextAlign.end,
                             style: defaultTS,
                           ),

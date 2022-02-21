@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:watch_ltr/functions/getImageUrl.dart';
 import 'package:watch_ltr/functions/openUrl.dart';
 import 'package:watch_ltr/provider/show_details_provider.dart';
+import 'package:watch_ltr/provider/userProvider.dart';
+import 'package:watch_ltr/resources/firebase_methods.dart';
 import 'package:watch_ltr/screens/widgets/getRecommendedMovies.dart';
 import 'package:watch_ltr/screens/widgets/getSimilarMovies.dart';
 
@@ -37,6 +39,11 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
     await showDetailsProvider.getReviews(widget.showId);
     await showDetailsProvider.getSimilarMovies(widget.showId);
 
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    WatchLaterListContainsShow =
+        userProvider.getUserModel.watchLaterList.contains(widget.showId);
+
     showDetailsProvider.isLoading = false;
     // await Future.delayed(
     //   Duration(seconds: 2),
@@ -46,6 +53,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
     //   },
     // );
   }
+
+  bool WatchLaterListContainsShow = false;
 
   @override
   Widget build(BuildContext context) {
@@ -669,29 +678,55 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: GestureDetector(
-                      onTap: () async {
-                        // Navigator.of(context).pushNamed(OpenWebView.route,
-                        //     arguments: {
-                        //       'Url': provider.showDetails.homepage.toString()
-                        //     });
-                      },
-                      child: Container(
-                        height: 30,
-                        width: double.infinity,
-                        color: red,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Add to watch later',
-                          style: TitleTS,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: GestureDetector(
+                          onTap: () async {
+                            await FirebaseMethods().addShowToWatchLaterList(
+                                widget.showId, context);
+                            // print('added');
+                            UserProvider userProvider =
+                                Provider.of<UserProvider>(context,
+                                    listen: false);
+                            await userProvider.refreshUser();
+                            setState(() {
+                              getData();
+                            });
+                          },
+                          child: Container(
+                            height: 40,
+                            width: double.infinity,
+                            color: red,
+                            alignment: Alignment.center,
+                            child: Text(
+                              WatchLaterListContainsShow
+                                  ? 'Add show to Watch List ?'
+                                  : 'Add show to Watch List ?',
+                              style: TitleTS,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Text(
+                          WatchLaterListContainsShow
+                              ? '*Show is already in your watchlist'
+                              : '',
+                          style: defaultTS.copyWith(color: red, fontSize: 12),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -726,30 +761,29 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             ),
                           ],
                         ),
-
                   provider.similarMovies.results!.length == 0
                       ? Container()
                       : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GetSimilarMovies(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 15),
-                        child: Divider(
-                          height: 1,
-                          color: white.withOpacity(.1),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GetSimilarMovies(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Divider(
+                                height: 1,
+                                color: white.withOpacity(.1),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
