@@ -5,6 +5,7 @@ import 'package:watch_ltr/constants/customTextStyle.dart';
 import 'package:watch_ltr/provider/home_provider.dart';
 import 'package:watch_ltr/screens/movies_page.dart';
 import 'package:watch_ltr/screens/searchTab.dart';
+import 'package:watch_ltr/screens/watchList_page.dart';
 import 'package:watch_ltr/screens/widgets/getPopularMovies.dart';
 import 'package:watch_ltr/screens/widgets/getTrendingMovies.dart';
 import 'package:watch_ltr/screens/widgets/getUpComingMovies.dart';
@@ -83,11 +84,7 @@ class _HomeTabState extends State<HomeTab> {
                                   color: Colors.red,
                                 ),
                                 MoviesPage(),
-                                Container(
-                                  height: MediaQuery.of(context).size.height,
-                                  width: MediaQuery.of(context).size.width,
-                                  color: Colors.blue,
-                                ),
+                                WatchListPage()
                               ],
                             ));
                       }),
@@ -95,7 +92,7 @@ class _HomeTabState extends State<HomeTab> {
                   top: 0,
                   left: 0,
                   child: Container(
-                    height: 50,
+                    // height: 50,
                     // color: Colors.pink,
                     child: getAppBar(),
                   ),
@@ -108,12 +105,17 @@ class _HomeTabState extends State<HomeTab> {
       Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: SearchTab(),
+        child: Stack(
+          children: [SearchTab(), getAppBar()],
+        ),
       ),
       Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: black,
+        child: Stack(
+          children: [WatchListPage(), getAppBar()],
+        ),
       ),
       Container(
         height: MediaQuery.of(context).size.height,
@@ -122,6 +124,8 @@ class _HomeTabState extends State<HomeTab> {
       ),
     ];
 
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0),
@@ -132,52 +136,180 @@ class _HomeTabState extends State<HomeTab> {
       key: scaffoldStateKey,
       drawer: Drawer(
         backgroundColor: black,
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                    // color: Colors.blue,
-                    ),
+        child: Stack(
+          children: [
+            SizedBox.expand(
+              child: Image.asset(
+                'assets/drawer_background_img.jpg',
+                fit: BoxFit.cover,
               ),
-              InkWell(
-                onTap: () async {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  height: 45,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.signOutAlt,
+            ),
+            SizedBox.expand(
+              child: Container(
+                color: red.withOpacity(.90),
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * .15,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text(
+                      'X',
+                      style: TextStyle(
+                        fontFamily: 'sans-serif',
+                        fontWeight: FontWeight.w500,
                         color: white,
-                        size: 22,
+                        fontSize: 20,
                       ),
-                      const SizedBox(
-                        width: 10,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              setState(() {
+                                currentIndex = 0;
+                              });
+                              homeProvider.pageController.animateToPage(1,
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.linear);
+                            },
+                            child: Text(
+                              'Home',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              setState(() {
+                                currentIndex = 0;
+                              });
+                              homeProvider.pageController.animateToPage(1,
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.linear);
+                            },
+
+                            child: Text(
+                              'Movies',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+
+                              setState(() {
+                                currentIndex = 0;
+                              });
+                              homeProvider.pageController.animateToPage(0,
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.linear);
+                            },
+                            child: Text(
+                              'TV SHow',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                              setState(() {
+                                currentIndex = 2;
+                              });
+                            },
+                            child: Text(
+                              'Watch list',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: (){
+
+                              Navigator.pop(context);
+                              setState(() {
+                                currentIndex = 1;
+                              });
+                            },
+                            child: Text(
+                              'Search',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                              setState(() {
+                                currentIndex = 3;
+                              });
+                            },
+                            child: Text(
+                              'My Account',
+                              style:
+                                  TitleTS.copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Sign Out',
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 45,
+                      child: Text(
+                        'Log Out',
                         style: TitleTS.copyWith(fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       backgroundColor: black,
@@ -266,6 +398,8 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   BottomNavigationBar getBottomNavigationBar() {
+    HomeProvider homeProvider =
+        Provider.of<HomeProvider>(context, listen: false);
     return BottomNavigationBar(
       // showSelectedLabels: false,
       // showUnselectedLabels: false,
@@ -275,6 +409,13 @@ class _HomeTabState extends State<HomeTab> {
       unselectedItemColor: black.withOpacity(.7),
       currentIndex: currentIndex,
       onTap: (index) {
+        if (index == 0) {
+          setState(() {
+            currentIndex = index;
+          });
+          homeProvider.pageController.animateToPage(1,
+              duration: Duration(seconds: 1), curve: Curves.linear);
+        }
         setState(() {
           currentIndex = index;
         });
@@ -292,8 +433,8 @@ class _HomeTabState extends State<HomeTab> {
           label: 'SEARCH',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.bookmark, size: 27),
-          label: 'BOOKMARKS',
+          icon: Icon(Icons.remove_red_eye, size: 27),
+          label: 'WATCH LIST',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person, size: 27),

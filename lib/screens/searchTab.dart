@@ -66,60 +66,6 @@ class _SearchTabState extends State<SearchTab> {
               color: black.withOpacity(.95),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: CustomSearchField(
-                            textEditingController: searchTextEditingController,
-                            hintText: 'Search...',
-                            textInputType: TextInputType.text,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 40,
-                          child: IconButton(
-                            onPressed: () {
-                              if (searchTextEditingController.text.isNotEmpty) {
-                                SearchProvider searchProvider =
-                                    Provider.of<SearchProvider>(context,
-                                        listen: false);
-                                searchProvider.showSearchResults = true;
-                                searchProvider.showLoading = true;
-
-                                searchProvider.getSearchResult(
-                                    searchTextEditingController.text);
-
-                                Future.delayed(Duration(seconds: 1))
-                                    .then((value) {
-                                  searchProvider.showLoading = false;
-                                  print('done searching');
-                                });
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    backgroundColor: red,
-                                    duration: Duration(seconds: 2),
-                                    content: Text(
-                                        'Please input a correct parameter'),
-                                  ),
-                                );
-                              }
-                            },
-                            splashColor: black,
-                            icon: Icon(
-                              Icons.search,
-                              color: white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Expanded(
                     child: Consumer<SearchProvider>(
                       builder: (context, searchProv, childProperty) {
@@ -139,6 +85,63 @@ class _SearchTabState extends State<SearchTab> {
                                     physics: BouncingScrollPhysics(),
                                     child: Column(
                                       children: [
+                                        SizedBox(
+                                          height: 55,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: CustomSearchField(
+                                                  textEditingController: searchTextEditingController,
+                                                  hintText: 'Search...',
+                                                  textInputType: TextInputType.text,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Container(
+                                                width: 40,
+                                                child: IconButton(
+                                                  onPressed: () {
+                                                    if (searchTextEditingController.text.isNotEmpty) {
+                                                      SearchProvider searchProvider =
+                                                      Provider.of<SearchProvider>(context,
+                                                          listen: false);
+                                                      searchProvider.showSearchResults = true;
+                                                      searchProvider.showLoading = true;
+
+                                                      searchProvider.getSearchResult(
+                                                          searchTextEditingController.text);
+
+                                                      Future.delayed(Duration(seconds: 1))
+                                                          .then((value) {
+                                                        searchProvider.showLoading = false;
+                                                        print('done searching');
+                                                      });
+                                                    } else {
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        const SnackBar(
+                                                          backgroundColor: red,
+                                                          duration: Duration(seconds: 2),
+                                                          content: Text(
+                                                              'Please input a correct parameter'),
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                  splashColor: black,
+                                                  icon: Icon(
+                                                    Icons.search,
+                                                    color: white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         GetSearchedShows(),
                                       ],
                                     ),
@@ -164,6 +167,63 @@ class _SearchTabState extends State<SearchTab> {
                                           physics: BouncingScrollPhysics(),
                                           child: Column(
                                             children: [
+                                              SizedBox(
+                                                height: 55,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.all(15.0),
+                                                child: Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: CustomSearchField(
+                                                        textEditingController: searchTextEditingController,
+                                                        hintText: 'Search...',
+                                                        textInputType: TextInputType.text,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Container(
+                                                      width: 40,
+                                                      child: IconButton(
+                                                        onPressed: () {
+                                                          if (searchTextEditingController.text.isNotEmpty) {
+                                                            SearchProvider searchProvider =
+                                                            Provider.of<SearchProvider>(context,
+                                                                listen: false);
+                                                            searchProvider.showSearchResults = true;
+                                                            searchProvider.showLoading = true;
+
+                                                            searchProvider.getSearchResult(
+                                                                searchTextEditingController.text);
+
+                                                            Future.delayed(Duration(seconds: 1))
+                                                                .then((value) {
+                                                              searchProvider.showLoading = false;
+                                                              print('done searching');
+                                                            });
+                                                          } else {
+                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                              const SnackBar(
+                                                                backgroundColor: red,
+                                                                duration: Duration(seconds: 2),
+                                                                content: Text(
+                                                                    'Please input a correct parameter'),
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
+                                                        splashColor: black,
+                                                        icon: Icon(
+                                                          Icons.search,
+                                                          color: white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               GetTrendingMovies(),
                                             ],
                                           ),

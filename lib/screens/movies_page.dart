@@ -162,7 +162,7 @@ class _MoviesPageState extends State<MoviesPage> {
                           child: Text(
                             '      ${provider.trendingMovies.results![0].overview.toString()}',
                             // overflow: TextOverflow.ellipsis,
-                            // maxLines: 4,
+                            maxLines: 3,
                             textAlign: TextAlign.end,
                             style: defaultTS,
                           ),

@@ -98,6 +98,46 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                   ],
                 ),
               ),
+              provider.isLoading
+                  ? Container()
+                  : WatchLaterListContainsShow
+                      ? Container()
+                      : Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () async {
+                              await FirebaseMethods().addShowToWatchLaterList(
+                                  widget.showId, context);
+                              // print('added');
+                              UserProvider userProvider =
+                                  Provider.of<UserProvider>(context,
+                                      listen: false);
+                              await userProvider.refreshUser();
+                              setState(() {
+                                getData();
+                              });
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  'Show added to your watch list.',
+                                  style: defaultTS.copyWith(color: white),
+                                ),
+                                backgroundColor: red,
+                              ));
+                            },
+                            child: Container(
+                              height: 48,
+                              color: red,
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Watch later?',
+                                style: TitleTS.copyWith(fontSize: 20),
+                              ),
+                            ),
+                          ),
+                        )
             ],
           ),
         ),
@@ -676,66 +716,6 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                         )
                       : Container(),
                   SizedBox(
-                    height: 5,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: GestureDetector(
-                          onTap: () async {
-                            await FirebaseMethods().addShowToWatchLaterList(
-                                widget.showId, context);
-                            // print('added');
-                            UserProvider userProvider =
-                                Provider.of<UserProvider>(context,
-                                    listen: false);
-                            await userProvider.refreshUser();
-                            setState(() {
-                              getData();
-                            });
-                          },
-                          child: Container(
-                            height: 40,
-                            width: double.infinity,
-                            color: red,
-                            alignment: Alignment.center,
-                            child: Text(
-                              WatchLaterListContainsShow
-                                  ? 'Add show to Watch List ?'
-                                  : 'Add show to Watch List ?',
-                              style: TitleTS,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Text(
-                          WatchLaterListContainsShow
-                              ? '*Show is already in your watchlist'
-                              : '',
-                          style: defaultTS.copyWith(color: red, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Divider(
-                      height: 1,
-                      color: white.withOpacity(.1),
-                    ),
-                  ),
-                  SizedBox(
                     height: 10,
                   ),
                   provider.recommendedMovies.results!.length == 0
@@ -745,9 +725,6 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GetRecommendedMovies(),
-                            SizedBox(
-                              height: 10,
-                            ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 15),
@@ -771,19 +748,24 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             SizedBox(
                               height: 10,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              child: Divider(
-                                height: 1,
-                                color: white.withOpacity(.1),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(horizontal: 15),
+                            //   child: Divider(
+                            //     height: 1,
+                            //     color: white.withOpacity(.1),
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
                           ],
                         ),
+                  WatchLaterListContainsShow
+                      ? Container()
+                      : SizedBox(
+                          height: 48,
+                        )
                 ],
               ),
             ),

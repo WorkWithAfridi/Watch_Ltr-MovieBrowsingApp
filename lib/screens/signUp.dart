@@ -202,7 +202,10 @@ class _SignUpState extends State<SignUp> {
                                   });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Fields cannot be empty!'),
+                                      content: Text(
+                                        'Fields cannot be empty!',
+                                        style: defaultTS.copyWith(color: white),
+                                      ),
                                       backgroundColor: red,
                                     ),
                                   );
